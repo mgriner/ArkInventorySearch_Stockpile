@@ -1,0 +1,15 @@
+## Interface: 70300
+
+## Title: Ark Inventory [Search] - Stockpile
+## Author: Nawah - Ghostlands
+## Email: hermetic dot charm at gmail dot com
+## Version: 70300
+
+## Notes: Changes the way search is performed to try and improve user experience (speed and accuracy).  May use more memory.
+
+## DefaultState: Enabled
+## LoadOnDemand: 0
+## RequiredDeps: ArkInventory, ArkInventorySearch
+
+ArkInventorySearch_Stockpile.lua
+
