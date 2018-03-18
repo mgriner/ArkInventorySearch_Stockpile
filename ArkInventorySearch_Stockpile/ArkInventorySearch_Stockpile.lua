@@ -85,6 +85,15 @@ function ArkInventorySearch_Stockpile:OnEnable()
 	
 end
 
+function ArkInventorySearch_Stockpile:OnDisable()
+	ArkInventorySearch_Stockpile:UnhookAll( )
+	
+	ArkInventorySearch_Stockpile:UnregisterEvent( "PLAYER_ALIVE", "EVENT_WOW_PLAYER_ALIVE" )
+	ArkInventorySearch_Stockpile:UnregisterEvent( "GET_ITEM_INFO_RECEIVED", "EVENT_WOW_GET_ITEM_INFO_RECEIVED" )
+	ArkInventorySearch_Stockpile:UnregisterMessage( "EVENT_ARKINV_BUILD_GLOBAL_CACHE" )
+	ArkInventorySearch_Stockpile.UnregisterSearchCacheEvents( )
+	ArkInventorySearch_Stockpile:UnregisterAllBuckets( )
+end
 
 -- EVENTS ----------------------------------------------
 
