@@ -28,6 +28,13 @@ local error = _G.error
 local table = _G.table
 
 ArkInventorySearch_Stockpile = LibStub( "AceAddon-3.0" ):NewAddon( "ArkInventorySearch_Stockpile", "AceConsole-3.0", "AceHook-3.0", "AceEvent-3.0", "AceBucket-3.0" )
+
+ArkInventorySearch_Stockpile.Lib = { -- libraries live here
+	
+	Config = LibStub( "AceConfig-3.0" ),
+	
+}
+
 ArkInventorySearch_Stockpile:SetDefaultModuleState(false)
 
 local search = ArkInventorySearch_Stockpile:NewModule( "ArkInventorySearch_Stockpile" )
@@ -47,7 +54,7 @@ function search:OnDisable( )
 	table.wipe( ArkInventory.Search.SourceTable )
 	
 	table.wipe( search.cache )
-	
+	ArkInventory.Search.frame = ARKINV_Search
 end
 
 -- ArkInventorySearch_Stockpile.GlobalSearchCache
@@ -74,6 +81,13 @@ ArkInventorySearch_Stockpile.ItemLoadingQueue = { }
 
 local cache_bag_bucket	-- variable to store bucket
 local cache_location_bucket	-- variable to store bucket
+
+function ArkInventorySearch_Stockpile.OnInitialize( )
+	-- config menu (blizzard)
+	ArkInventorySearch_Stockpile.ConfigBlizzard( )
+	ArkInventorySearch_Stockpile.Lib.Config:RegisterOptionsTable( "ArkInventory_StockpileConfigBlizzard", ArkInventorySearch_Stockpile.Config.Blizzard )
+	ArkInventory.Lib.Dialog:AddToBlizOptions( "ArkInventory_StockpileConfigBlizzard", "ArkInventorySearch_Stockpile" )
+end
 
 function ArkInventorySearch_Stockpile:OnEnable()
 	ArkInventory:DisableModule( "ArkInventorySearch" )
@@ -119,6 +133,33 @@ function ArkInventorySearch_Stockpile:OnDisable()
 	
 	ArkInventory:DisableModule( "ArkInventorySearch_Stockpile" )
 	ArkInventorySearch_Stockpile:EnableModule( "ArkInventorySearch" )
+end
+
+function ArkInventorySearch_Stockpile.ConfigBlizzard( )
+	ArkInventorySearch_Stockpile.Config = {
+		Blizzard = {
+			type = "group",
+			childGroups = "tree",
+			name = "ArkInventorySearch_Stockpile",
+			args = {
+				enabled = {
+					order = 400,
+					name = ArkInventory.Localise["ENABLED"],
+					type = "toggle",
+					get = function( info )
+						return search:IsEnabled( )
+					end,
+					set = function( info, v )
+						if v then
+							search:Enable( )
+						else
+							search:Disable( )
+						end
+					end,
+				},
+			},
+		},
+	}
 end
 
 
@@ -172,6 +213,7 @@ function ArkInventorySearch_Stockpile.Frame_Table_Refresh( frame )
 	
 	local filter = _G[string.format( "%s%s", f, "SearchFilter" )]:GetText( )
 	filter = ArkInventory.Search.CleanText( filter )
+	--filter = string.gsub(filter, "%p", "%%%1")
 	--ArkInventory.Output( "filter = [", filter, "]" )
 	
 	--filter = string.gsub( filter, "-", "--" ) -- escape hyphens or they won't work right
