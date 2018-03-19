@@ -12,4 +12,5 @@
 ## RequiredDeps: ArkInventory, ArkInventorySearch
 
 ArkInventorySearch_Stockpile.lua
-
+ArkInventorySearch_Stockpile_Cache.lua
+ArkInventorySearch_Stockpile.xml
