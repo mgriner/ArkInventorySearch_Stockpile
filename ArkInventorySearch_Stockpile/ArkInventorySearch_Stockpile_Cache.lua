@@ -304,7 +304,8 @@ function ArkInventorySearch_Stockpile.AddItemsToSearchCache( object_info_table )
 		
 	end
 	
-	if ARKINV_Search_Stockpile then
+	-- Make sure the UI exists, ignore table refresh if we are building the whole cache (performance)
+	if ARKINV_Search_Stockpile and not ArkInventorySearch_Stockpile.IsBuilding then
 		ArkInventorySearch_Stockpile.Frame_Table_Refresh( )
 	end
 	
@@ -516,7 +517,7 @@ end
 -- Loops through all p,l,b in ArkInventory.db and builds global cache
 -- Items that are missing data are put in the loading queue
 function ArkInventorySearch_Stockpile:EVENT_ARKINV_BUILD_GLOBAL_CACHE( )
-
+	ArkInventorySearch_Stockpile.IsBuilding = true
 	local item_cache_table = { }
 
 	for p, pd in ArkInventory.spairs( ArkInventory.db.player.data ) do
@@ -562,5 +563,5 @@ function ArkInventorySearch_Stockpile:EVENT_ARKINV_BUILD_GLOBAL_CACHE( )
 		end
 		
 	end
-	
+	ArkInventorySearch_Stockpile.IsBuilding = false
 end

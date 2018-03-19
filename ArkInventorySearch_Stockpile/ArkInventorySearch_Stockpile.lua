@@ -46,6 +46,7 @@ ArkInventorySearch_Stockpile:SetDefaultModuleState(false)
 -- for this object like so: GlobalSearchCache["item:44571"] which would return cached item info for Bottle of Silvermoon Port
 -- including a location table which tells us every p,l,b where that item exists
 ArkInventorySearch_Stockpile.GlobalSearchCache = { }
+ArkInventorySearch_Stockpile.IsBuilding = false
 -- ArkInventorySearch_Stockpile.GlobalSearchCacheIndexLookup
 -- holds index of all items in a container
 -- ArkInventorySearch_Stockpile.GlobalSearchCacheIndexLookup[player_id][location_id][bag_id]
