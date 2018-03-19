@@ -37,26 +37,6 @@ ArkInventorySearch_Stockpile.Lib = { -- libraries live here
 
 ArkInventorySearch_Stockpile:SetDefaultModuleState(false)
 
-local search = ArkInventorySearch_Stockpile:NewModule( "ArkInventorySearch_Stockpile" )
-
-function search:OnEnable( )
-	ArkInventory.Search.frame = ARKINV_Search_Stockpile
-	ArkInventory.Search.rebuild = true
-	ArkInventory.Search.SourceTable = { }
-	
-	search.cache = { }
-	
-end
-
-function search:OnDisable( )
-	
-	ArkInventory.Search.Frame_Hide( )
-	table.wipe( ArkInventory.Search.SourceTable )
-	
-	table.wipe( search.cache )
-	ArkInventory.Search.frame = ARKINV_Search
-end
-
 -- ArkInventorySearch_Stockpile.GlobalSearchCache
 -- holds all cached items for search
 -- Each entry contains:
@@ -92,8 +72,6 @@ end
 function ArkInventorySearch_Stockpile:OnEnable()
 	ArkInventory:DisableModule( "ArkInventorySearch" )
 	ArkInventorySearch_Stockpile:EnableModule( "ArkInventorySearch_Stockpile" )
-	-- overriding the default search table refresh function
-	--ArkInventorySearch_Stockpile:RawHook(ArkInventory.Search, "Frame_Table_Refresh", ArkInventorySearch_Stockpile.Frame_Table_Refresh, true)
   
 	-- registering global cache specific events
 	ArkInventorySearch_Stockpile:RegisterEvent( "PLAYER_ALIVE", "EVENT_WOW_PLAYER_ALIVE" )
@@ -131,8 +109,7 @@ function ArkInventorySearch_Stockpile:OnDisable()
 	ArkInventorySearch_Stockpile.UnregisterSearchCacheEvents( )
 	ArkInventorySearch_Stockpile:UnregisterAllBuckets( )
 	
-	ArkInventory:DisableModule( "ArkInventorySearch_Stockpile" )
-	ArkInventorySearch_Stockpile:EnableModule( "ArkInventorySearch" )
+	ArkInventorySearch_Stockpile:DisableModule( "ArkInventorySearch_Stockpile" )
 end
 
 function ArkInventorySearch_Stockpile.ConfigBlizzard( )
@@ -147,13 +124,13 @@ function ArkInventorySearch_Stockpile.ConfigBlizzard( )
 					name = ArkInventory.Localise["ENABLED"],
 					type = "toggle",
 					get = function( info )
-						return search:IsEnabled( )
+						return ArkInventorySearch_Stockpile:GetModule( "ArkInventorySearch_Stockpile" ):IsEnabled( )
 					end,
 					set = function( info, v )
 						if v then
-							search:Enable( )
+							ArkInventorySearch_Stockpile:EnableModule( "ArkInventorySearch_Stockpile" )
 						else
-							search:Disable( )
+							ArkInventorySearch_Stockpile:DisableModule( "ArkInventorySearch_Stockpile" )
 						end
 					end,
 				},
@@ -201,44 +178,7 @@ end
 
 -- Overrides table refresh function so that we can use our cached search data rather than
 -- the normal search data from ArkInventory
-function ArkInventorySearch_Stockpile.Frame_Table_Refresh( frame )
-	local f
-	if not frame then
-		frame = ARKINV_Search_StockpileFrameViewSearchFilter
-	end
-	f = frame:GetParent( ):GetParent( ):GetParent( ):GetName( )
-	f = string.format( "%s%s", f, "View" )
 
-	ArkInventory.Search.Frame_Table_Reset( f )
-	
-	local filter = _G[string.format( "%s%s", f, "SearchFilter" )]:GetText( )
-	filter = ArkInventory.Search.CleanText( filter )
-	--filter = string.gsub(filter, "%p", "%%%1")
-	--ArkInventory.Output( "filter = [", filter, "]" )
-	
-	--filter = string.gsub( filter, "-", "--" ) -- escape hyphens or they won't work right
-	
-	local newSearchTable = { }
-	local c = 0
-	if ArkInventorySearch_Stockpile.GlobalSearchCache then
-		for id, itemData in pairs(ArkInventorySearch_Stockpile.GlobalSearchCache) do
-			--if string.find( string.lower( itemData.name or "" ), string.lower( filter ) ) or filter == "" then
-			if string.find( itemData.search_text, filter, nil, true ) or filter == "" then
-				c = c + 1
-				newSearchTable[c] = itemData
-			end
-			
-		end
-		
-	end
-	ArkInventory.Search.SourceTable = newSearchTable
-	
-	if #ArkInventory.Search.SourceTable > 0 then
-		table.sort( ArkInventory.Search.SourceTable, function( a, b ) return a.sorted < b.sorted end )
-		ArkInventory.Search.Frame_Table_Scroll( frame )
-	end
-
-end
 
 
 -- HOOKS -------------------------------------------------------------------------------------
