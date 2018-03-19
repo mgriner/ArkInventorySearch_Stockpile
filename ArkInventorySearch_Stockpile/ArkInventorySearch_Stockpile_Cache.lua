@@ -16,7 +16,7 @@ function ArkInventorySearch_Stockpile:EVENT_WOW_PLAYER_ALIVE( )
 	
 	-- unregister cache events to avoid many unecessary calls at login/load
 	ArkInventorySearch_Stockpile.UnregisterSearchCacheEvents( )
-	-- build global search cache, will only fire once at login
+	-- build global search cache, will only fire once at login or when module is enabled
 	-- then the event is unregistered
 	ArkInventorySearch_Stockpile.BuildGlobalSearchCache( )
 	
