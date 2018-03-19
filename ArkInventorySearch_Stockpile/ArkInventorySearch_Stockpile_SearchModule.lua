@@ -60,7 +60,7 @@ function ArkInventorySearch_Stockpile.SearchModule:OnDisable( )
 	
 	table.wipe( ArkInventorySearch_Stockpile.GlobalSearchCache )
 	table.wipe( ArkInventorySearch_Stockpile.GlobalSearchCacheIndexLookup )
-	print("re-enabling old search")
+	
 	ArkInventory:EnableModule( "ArkInventorySearch" )
 end
 
