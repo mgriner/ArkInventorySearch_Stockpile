@@ -40,7 +40,7 @@ ArkInventorySearch_Stockpile:SetDefaultModuleState(false)
 -- ArkInventorySearch_Stockpile.GlobalSearchCache
 -- holds all cached items for search
 -- Each entry contains:
--- { id = object_id, sorted = object_info.name, name = object_info.name, h = object_info.h, q = object_info.q, t = object_info.texture, locationTable = location_table }
+-- { id = object_id, sorted = object_info.name, name = object_info.name, h = object_info.h, q = object_info.q, t = object_info.texture, location_table = location_table }
 -- location_table is a table of entries containing (player_id, location_id, bag_id) for every p,l,b that contains this item
 -- GlobalSearchCache is indexed by the objectid which has the format CLASS:ID, e.g. item:44571 so you can access item info
 -- for this object like so: GlobalSearchCache["item:44571"] which would return cached item info for Bottle of Silvermoon Port
