@@ -12,161 +12,62 @@ MAXIMUM_BID_PRICE = 99999999999;
 AUCTION_CANCEL_COST =  5;	--5% of the current bid
 NUM_TOKEN_LOGS_TO_DISPLAY = 14;
 
-AuctionSort = { };
-
--- owner sorts
-AuctionSort["owner_status"] = {
-	{ column = "quantity",	reverse = true	},
-	{ column = "bid",		reverse = false	},
-	{ column = "name",		reverse = false	},
-	{ column = "level",		reverse = true	},
-	{ column = "quality",	reverse = false	},
-	{ column = "duration",	reverse = false	},
-	{ column = "status",	reverse = false	},
-};
-
-AuctionSort["owner_bid"] = {
-	{ column = "quantity",	reverse = true	},
-	{ column = "name",		reverse = false	},
-	{ column = "level",		reverse = true	},
-	{ column = "quality",	reverse = false	},
-	{ column = "duration",	reverse = false	},
-	{ column = "status",	reverse = false	},
-	{ column = "bid",		reverse = false	},
-};
-
-AuctionSort["owner_quality"] = {
-	{ column = "bid",		reverse = false	},
-	{ column = "quantity",	reverse = true	},
-	{ column = "minbidbuyout",	reverse = false	},
-	{ column = "name",		reverse = false	},
-	{ column = "level",		reverse = true	},
-	{ column = "quality",	reverse = false	},
-};
-
-AuctionSort["owner_duration"] = {
-	{ column = "quantity",	reverse = true	},
-	{ column = "bid",		reverse = false	},
-	{ column = "name",		reverse = false	},
-	{ column = "level",		reverse = true	},
-	{ column = "quality",	reverse = false	},
-	{ column = "status",	reverse = false	},
-	{ column = "duration",	reverse = false	},
-};
-
--- bidder sorts
-AuctionSort["bidder_quality"] = {
-	{ column =  "bid",		reverse = false	},
-	{ column =  "quantity",	reverse = true	},
-	{ column =  "minbidbuyout",	reverse = false	},
-	{ column =  "name",		reverse = false	},
-	{ column =  "level",	reverse = true	},
-	{ column =  "quality",	reverse = false	},
-};
-
-AuctionSort["bidder_level"] = {
-	{ column =  "minbidbuyout",	reverse = true	},
-	{ column =  "status",	reverse = true	},
-	{ column =  "bid",		reverse = true	},
-	{ column =  "duration",	reverse = true	},
-	{ column =  "quantity",	reverse = false	},
-	{ column =  "name",		reverse = true	},
-	{ column =  "quality",	reverse = true	},
-	{ column =  "level",	reverse = false	},
-};
-
-AuctionSort["bidder_buyout"] = {
-	{ column =  "quantity",	reverse = true	},
-	{ column =  "name",		reverse = false	},
-	{ column =  "level",	reverse = true	},
-	{ column =  "quality",	reverse = false	},
-	{ column =  "status",	reverse = false	},
-	{ column =  "bid",		reverse = false	},
-	{ column =  "duration",	reverse = false	},
-	{ column =  "buyout",	reverse = false	},
-};
- 
-AuctionSort["bidder_status"] = {
-	{ column =  "quantity",	reverse = true	},
-	{ column =  "name",		reverse = false	},
-	{ column =  "level",	reverse = true	},
-	{ column =  "quality",	reverse = false	},
-	{ column =  "minbidbuyout",	reverse = false	},
-	{ column =  "bid",		reverse = false	},
-	{ column =  "duration", reverse = false	},
-	{ column =  "status",	reverse = false	},
-};
-
-AuctionSort["bidder_bid"] = {
-	{ column =  "quantity",	reverse = true	},
-	{ column =  "name",		reverse = false	},
-	{ column =  "level",	reverse = true	},
-	{ column =  "quality",	reverse = false	},
-	{ column =  "minbidbuyout",	reverse = false	},
-	{ column =  "status",	reverse = false	},
-	{ column =  "duration",	reverse = false	},
-	{ column =  "bid",		reverse = false	},
-};
-
-AuctionSort["bidder_duration"] = {
-	{ column =  "quantity",	reverse = true	},
-	{ column =  "name",		reverse = false	},
-	{ column =  "level",	reverse = true	},
-	{ column =  "quality",	reverse = false	},
-	{ column =  "minbidbuyout",	reverse = false	},
-	{ column =  "status",	reverse = false	},
-	{ column =  "bid",		reverse = false	},
-	{ column =  "duration",	reverse = false	},
-};
+ArkInventorySearch_Stockpile.StockpileSort = { };
 
 -- list sorts
-AuctionSort["list_name"] = {
-	{ column = "duration",	reverse = false	},
-	{ column = "unitprice",		reverse = false },
-	{ column = "quantity",	reverse = true	},
-	{ column = "minbidbuyout",	reverse = false	},
+ArkInventorySearch_Stockpile.StockpileSort["list_name"] = {
+	-- { column = "duration",	reverse = false	},
+	-- { column = "unitprice",		reverse = false },
+	-- { column = "quantity",	reverse = true	},
+	-- { column = "minbidbuyout",	reverse = false	},
 	{ column = "name",		reverse = false	},
-	{ column = "level",		reverse = true	},
-	{ column = "quality",	reverse = false	},
+	-- { column = "level",		reverse = true	},
+	-- { column = "quality",	reverse = false	},
 };
-AuctionSort["list_level"] = {
-	{ column = "duration",	reverse = true	},
-	{ column = "unitprice",		reverse = false },
-	{ column = "quantity",	reverse = false	},
-	{ column = "minbidbuyout",	reverse = true	},
-	{ column = "name",		reverse = true	},
-	{ column = "quality",	reverse = true	},
-	{ column = "level",		reverse = false	},
-};
-AuctionSort["list_duration"] = {
-	{ column = "unitprice",		reverse = false },
-	{ column = "quantity",	reverse = true	},
-	{ column = "minbidbuyout",	reverse = false	},
+ArkInventorySearch_Stockpile.StockpileSort["list_level"] = {
+	-- { column = "duration",	reverse = true	},
+	-- { column = "unitprice",		reverse = false },
+	-- { column = "quantity",	reverse = false	},
+	-- { column = "minbidbuyout",	reverse = true	},
+	-- { column = "name",		reverse = true	},
+	-- { column = "quality",	reverse = true	},
+	{ column = "uselevel",		reverse = false	},
 	{ column = "name",		reverse = false	},
-	{ column = "level",		reverse = true	},
-	{ column = "quality",	reverse = false	},
-	{ column = "duration",	reverse = false	},
 };
-AuctionSort["list_seller"] = {
-	{ column = "duration",	reverse = false	},
-	{ column = "unitprice",		reverse = false },
-	{ column = "quantity",	reverse = true	},
-	{ column = "minbidbuyout",	reverse = false	},
+ArkInventorySearch_Stockpile.StockpileSort["list_itemLevel"] = {
+	-- { column = "unitprice",		reverse = false },
+	-- { column = "quantity",	reverse = true	},
+	-- { column = "minbidbuyout",	reverse = false	},
+	-- { column = "level",		reverse = true	},
+	-- { column = "quality",	reverse = false	},
+	-- { column = "duration",	reverse = false	},
+	{ column = "ilvl", reverse = false },
 	{ column = "name",		reverse = false	},
-	{ column = "level",		reverse = true	},
-	{ column = "quality",	reverse = false	},
-	{ column = "seller",	reverse = false	},
 };
-AuctionSort["list_unitprice"] = {
-	{ column = "duration",	reverse = false	},
-	{ column = "quantity",	reverse = true	},
+ArkInventorySearch_Stockpile.StockpileSort["list_itemType"] = {
+	-- { column = "duration",	reverse = false	},
+	-- { column = "unitprice",		reverse = false },
+	-- { column = "quantity",	reverse = true	},
+	-- { column = "minbidbuyout",	reverse = false	},
+	-- { column = "level",		reverse = true	},
+	-- { column = "quality",	reverse = false	},
+	-- { column = "seller",	reverse = false	},
+	{ column = "itemtype",		reverse = false	},
 	{ column = "name",		reverse = false	},
-	{ column = "level",		reverse = true	},
-	{ column = "quality",	reverse = false	},
-	{ column = "unitprice",	reverse = false	},
+};
+ArkInventorySearch_Stockpile.StockpileSort["list_itemSubtype"] = {
+	-- { column = "duration",	reverse = false	},
+	-- { column = "unitprice",		reverse = false },
+	-- { column = "quantity",	reverse = true	},
+	-- { column = "minbidbuyout",	reverse = false	},
+	-- { column = "level",		reverse = true	},
+	-- { column = "quality",	reverse = false	},
+	-- { column = "seller",	reverse = false	},
+	{ column = "itemsubtype",		reverse = false	},
+	{ column = "name",		reverse = false	},
 };
 
-AuctionSort["list_quality"] = {
+ArkInventorySearch_Stockpile.StockpileSort["list_quality"] = {
 	{ column = "duration",	reverse = false	},
 	{ column = "unitprice",		reverse = false },
 	{ column = "quantity",	reverse = true	},
@@ -176,10 +77,10 @@ AuctionSort["list_quality"] = {
 	{ column = "quality",	reverse = false	},
 };
 
-AuctionCategories = {};
+ArkInventorySearch_Stockpile.StockpileCategories = {};
 
 local function FindDeepestCategory(categoryIndex, ...)
-	local categoryInfo = AuctionCategories[categoryIndex];
+	local categoryInfo = ArkInventorySearch_Stockpile.StockpileCategories[categoryIndex];
 	for i = 1, select("#", ...) do
 		local subCategoryIndex = select(i, ...);
 		if categoryInfo and categoryInfo.subCategories and categoryInfo.subCategories[subCategoryIndex] then
@@ -191,12 +92,12 @@ local function FindDeepestCategory(categoryIndex, ...)
 	return categoryInfo;
 end
 
-function StockpileFrame_GetDetailColumnString(categoryIndex, subCategoryIndex)
+function ArkInventorySearch_Stockpile.GetDetailColumnString(categoryIndex, subCategoryIndex)
 	local categoryInfo = FindDeepestCategory(categoryIndex, subCategoryIndex);
 	return categoryInfo and categoryInfo:GetDetailColumnString() or REQ_LEVEL_ABBR;
 end
 
-function StockpileFrame_DoesCategoryHaveFlag(flag, categoryIndex, subCategoryIndex, subSubCategoryIndex)
+function ArkInventorySearch_Stockpile.DoesCategoryHaveFlag(flag, categoryIndex, subCategoryIndex, subSubCategoryIndex)
 	local categoryInfo = FindDeepestCategory(categoryIndex, subCategoryIndex, subSubCategoryIndex);
 	if categoryInfo then
 		return categoryInfo:HasFlag(flag);
@@ -204,20 +105,20 @@ function StockpileFrame_DoesCategoryHaveFlag(flag, categoryIndex, subCategoryInd
 	return false;
 end
 
-function StockpileFrame_CreateCategory(name)
-	local category = CreateFromMixins(AuctionCategoryMixin);
+function ArkInventorySearch_Stockpile.CreateCategory(name)
+	local category = CreateFromMixins(ArkInventorySearch_Stockpile.AuctionCategoryMixin);
 	category.name = name;
-	AuctionCategories[#AuctionCategories + 1] = category;
+	ArkInventorySearch_Stockpile.StockpileCategories[#ArkInventorySearch_Stockpile.StockpileCategories + 1] = category;
 	return category;
 end
 
-AuctionCategoryMixin = {};
+ArkInventorySearch_Stockpile.AuctionCategoryMixin = {};
 
-function AuctionCategoryMixin:SetDetailColumnString(detailColumnString)
+function ArkInventorySearch_Stockpile.AuctionCategoryMixin:SetDetailColumnString(detailColumnString)
 	self.detailColumnString = detailColumnString;
 end
 
-function AuctionCategoryMixin:GetDetailColumnString()
+function ArkInventorySearch_Stockpile.AuctionCategoryMixin:GetDetailColumnString()
 	if self.detailColumnString then
 		return self.detailColumnString;
 	end
@@ -227,7 +128,7 @@ function AuctionCategoryMixin:GetDetailColumnString()
 	return REQ_LEVEL_ABBR;
 end
 
-function AuctionCategoryMixin:CreateSubCategory(classID, subClassID, inventoryType)
+function ArkInventorySearch_Stockpile.AuctionCategoryMixin:CreateSubCategory(classID, subClassID, inventoryType)
 	local name = "";
 	if inventoryType then
 		name = GetItemInventorySlotInfo(inventoryType);
@@ -247,10 +148,10 @@ function AuctionCategoryMixin:CreateSubCategory(classID, subClassID, inventoryTy
 	return self:CreateNamedSubCategory(name);
 end
 
-function AuctionCategoryMixin:CreateNamedSubCategory(name)
+function ArkInventorySearch_Stockpile.AuctionCategoryMixin:CreateNamedSubCategory(name)
 	self.subCategories = self.subCategories or {};
 
-	local subCategory = CreateFromMixins(AuctionCategoryMixin);
+	local subCategory = CreateFromMixins(ArkInventorySearch_Stockpile.AuctionCategoryMixin);
 	self.subCategories[#self.subCategories + 1] = subCategory;
 
 	assert(name and #name > 0);
@@ -260,27 +161,27 @@ function AuctionCategoryMixin:CreateNamedSubCategory(name)
 	return subCategory;
 end
 
-function AuctionCategoryMixin:CreateNamedSubCategoryAndFilter(name, classID, subClassID, inventoryType)
+function ArkInventorySearch_Stockpile.AuctionCategoryMixin:CreateNamedSubCategoryAndFilter(name, classID, subClassID, inventoryType)
 	local category = self:CreateNamedSubCategory(name);
 	category:AddFilter(classID, subClassID, inventoryType);
 
 	return category;
 end
 
-function AuctionCategoryMixin:CreateSubCategoryAndFilter(classID, subClassID, inventoryType)
+function ArkInventorySearch_Stockpile.AuctionCategoryMixin:CreateSubCategoryAndFilter(classID, subClassID, inventoryType)
 	local category = self:CreateSubCategory(classID, subClassID, inventoryType);
 	category:AddFilter(classID, subClassID, inventoryType);
 
 	return category;
 end
 
-function AuctionCategoryMixin:AddBulkInventoryTypeCategories(classID, subClassID, inventoryTypes)
+function ArkInventorySearch_Stockpile.AuctionCategoryMixin:AddBulkInventoryTypeCategories(classID, subClassID, inventoryTypes)
 	for i, inventoryType in ipairs(inventoryTypes) do
 		self:CreateSubCategoryAndFilter(classID, subClassID, inventoryType);
 	end
 end
 
-function AuctionCategoryMixin:AddFilter(classID, subClassID, inventoryType)
+function ArkInventorySearch_Stockpile.AuctionCategoryMixin:AddFilter(classID, subClassID, inventoryType)
 	self.filters = self.filters or {};
 	self.filters[#self.filters + 1] = { classID = classID, subClassID = subClassID, inventoryType = inventoryType, };
 
@@ -297,12 +198,12 @@ do
 		end
 	end
 
-	function AuctionCategoryMixin:GenerateSubCategoriesAndFiltersFromSubClass(classID)
+	function ArkInventorySearch_Stockpile.AuctionCategoryMixin:GenerateSubCategoriesAndFiltersFromSubClass(classID)
 		GenerateSubClassesHelper(self, classID, GetAuctionItemSubClasses(classID));
 	end
 end
 
-function AuctionCategoryMixin:FindSubCategoryByName(name)
+function ArkInventorySearch_Stockpile.AuctionCategoryMixin:FindSubCategoryByName(name)
 	if self.subCategories then
 		for i, subCategory in ipairs(self.subCategories) do
 			if subCategory.name == name then
@@ -312,7 +213,7 @@ function AuctionCategoryMixin:FindSubCategoryByName(name)
 	end
 end
 
-function AuctionCategoryMixin:SortSubCategories()
+function ArkInventorySearch_Stockpile.AuctionCategoryMixin:SortSubCategories()
 	if self.subCategories then
 		table.sort(self.subCategories, function(left, right)
 			return left.sortIndex < right.sortIndex;
@@ -320,27 +221,27 @@ function AuctionCategoryMixin:SortSubCategories()
 	end
 end
 
-function AuctionCategoryMixin:SetSortIndex(sortIndex)
+function ArkInventorySearch_Stockpile.AuctionCategoryMixin:SetSortIndex(sortIndex)
 	self.sortIndex = sortIndex
 end
 
-function AuctionCategoryMixin:SetFlag(flag)
+function ArkInventorySearch_Stockpile.AuctionCategoryMixin:SetFlag(flag)
 	self.flags = self.flags or {};
 	self.flags[flag] = true;
 end
 
-function AuctionCategoryMixin:ClearFlag(flag)
+function ArkInventorySearch_Stockpile.AuctionCategoryMixin:ClearFlag(flag)
 	if self.flags then
 		self.flags[flag] = nil;
 	end
 end
 
-function AuctionCategoryMixin:HasFlag(flag)
+function ArkInventorySearch_Stockpile.AuctionCategoryMixin:HasFlag(flag)
 	return not not (self.flags and self.flags[flag]);
 end
 
 do -- Weapons
-	local weaponsCategory = StockpileFrame_CreateCategory(AUCTION_CATEGORY_WEAPONS);
+	local weaponsCategory = ArkInventorySearch_Stockpile.CreateCategory(AUCTION_CATEGORY_WEAPONS);
 
 	local oneHandedCategory = weaponsCategory:CreateNamedSubCategory(AUCTION_SUBCATEGORY_ONE_HANDED);
 	oneHandedCategory:CreateSubCategoryAndFilter(LE_ITEM_CLASS_WEAPON, LE_ITEM_WEAPON_AXE1H);
@@ -385,7 +286,7 @@ do -- Armor
 		LE_INVENTORY_TYPE_HAND_TYPE,
 	};
 
-	local armorCategory = StockpileFrame_CreateCategory(AUCTION_CATEGORY_ARMOR);
+	local armorCategory = ArkInventorySearch_Stockpile.CreateCategory(AUCTION_CATEGORY_ARMOR);
 
 	local plateCategory = armorCategory:CreateSubCategoryAndFilter(LE_ITEM_CLASS_ARMOR, LE_ITEM_ARMOR_PLATE);
 	plateCategory:AddBulkInventoryTypeCategories(LE_ITEM_CLASS_ARMOR, LE_ITEM_ARMOR_PLATE, ArmorInventoryTypes);
@@ -426,40 +327,40 @@ do -- Armor
 end
 
 do -- Containers
-	local containersCategory = StockpileFrame_CreateCategory(AUCTION_CATEGORY_CONTAINERS);
+	local containersCategory = ArkInventorySearch_Stockpile.CreateCategory(AUCTION_CATEGORY_CONTAINERS);
 	containersCategory:SetDetailColumnString(SLOT_ABBR);
 	containersCategory:GenerateSubCategoriesAndFiltersFromSubClass(LE_ITEM_CLASS_CONTAINER);
 end
 
 do -- Gems
-	local gemsCategory = StockpileFrame_CreateCategory(AUCTION_CATEGORY_GEMS);
+	local gemsCategory = ArkInventorySearch_Stockpile.CreateCategory(AUCTION_CATEGORY_GEMS);
 	gemsCategory:SetDetailColumnString(ITEM_LEVEL_ABBR);
 	gemsCategory:GenerateSubCategoriesAndFiltersFromSubClass(LE_ITEM_CLASS_GEM);
 end
 
 do -- Item Enhancement
-	local itemEnhancementCategory = StockpileFrame_CreateCategory(AUCTION_CATEGORY_ITEM_ENHANCEMENT);
+	local itemEnhancementCategory = ArkInventorySearch_Stockpile.CreateCategory(AUCTION_CATEGORY_ITEM_ENHANCEMENT);
 	itemEnhancementCategory:SetDetailColumnString(ITEM_LEVEL_ABBR);
 	itemEnhancementCategory:GenerateSubCategoriesAndFiltersFromSubClass(LE_ITEM_CLASS_ITEM_ENHANCEMENT);
 end
 
 do -- Consumables
-	local consumablesCategory = StockpileFrame_CreateCategory(AUCTION_CATEGORY_CONSUMABLES);
+	local consumablesCategory = ArkInventorySearch_Stockpile.CreateCategory(AUCTION_CATEGORY_CONSUMABLES);
 	consumablesCategory:GenerateSubCategoriesAndFiltersFromSubClass(LE_ITEM_CLASS_CONSUMABLE);
 end
 
 do -- Glyphs
-	local glyphsCategory = StockpileFrame_CreateCategory(AUCTION_CATEGORY_GLYPHS);
+	local glyphsCategory = ArkInventorySearch_Stockpile.CreateCategory(AUCTION_CATEGORY_GLYPHS);
 	glyphsCategory:GenerateSubCategoriesAndFiltersFromSubClass(LE_ITEM_CLASS_GLYPH);
 end
 
 do -- Trade Goods
-	local tradeGoodsCategory = StockpileFrame_CreateCategory(AUCTION_CATEGORY_TRADE_GOODS);
+	local tradeGoodsCategory = ArkInventorySearch_Stockpile.CreateCategory(AUCTION_CATEGORY_TRADE_GOODS);
 	tradeGoodsCategory:GenerateSubCategoriesAndFiltersFromSubClass(LE_ITEM_CLASS_TRADEGOODS);
 end
 
 do -- Recipes
-	local recipesCategory = StockpileFrame_CreateCategory(AUCTION_CATEGORY_RECIPES);
+	local recipesCategory = ArkInventorySearch_Stockpile.CreateCategory(AUCTION_CATEGORY_RECIPES);
 	recipesCategory:GenerateSubCategoriesAndFiltersFromSubClass(LE_ITEM_CLASS_RECIPE);
 
 	local bookCategory = recipesCategory:FindSubCategoryByName(GetItemSubClassInfo(LE_ITEM_CLASS_RECIPE, LE_ITEM_RECIPE_BOOK));
@@ -472,24 +373,24 @@ do -- Recipes
 end
 
 do -- Battle Pets
-	local battlePetsCategory = StockpileFrame_CreateCategory(AUCTION_CATEGORY_BATTLE_PETS);
+	local battlePetsCategory = ArkInventorySearch_Stockpile.CreateCategory(AUCTION_CATEGORY_BATTLE_PETS);
 	battlePetsCategory:GenerateSubCategoriesAndFiltersFromSubClass(LE_ITEM_CLASS_BATTLEPET);
 	battlePetsCategory:CreateSubCategoryAndFilter(LE_ITEM_CLASS_MISCELLANEOUS, LE_ITEM_MISCELLANEOUS_COMPANION_PET);
 end
 
 do -- Mounts
-	local battlePetsCategory = StockpileFrame_CreateCategory(MOUNTS);
-	battlePetsCategory:CreateSubCategoryAndFilter(LE_ITEM_CLASS_MISCELLANEOUS, LE_ITEM_MISCELLANEOUS_MOUNT);
-	battlePetsCategory:CreateSubCategoryAndFilter(LE_ITEM_CLASS_MISCELLANEOUS, LE_ITEM_MISCELLANEOUS_MOUNT + 10);
+	local mountsCategory = ArkInventorySearch_Stockpile.CreateCategory(MOUNTS);
+	mountsCategory:CreateSubCategoryAndFilter(LE_ITEM_CLASS_MISCELLANEOUS, LE_ITEM_MISCELLANEOUS_MOUNT);
+	mountsCategory:CreateSubCategoryAndFilter(LE_ITEM_CLASS_MISCELLANEOUS, LE_ITEM_MISCELLANEOUS_MOUNT + 10);
 end
 
 do -- Quest Items
-	local questItemsCategory = StockpileFrame_CreateCategory(AUCTION_CATEGORY_QUEST_ITEMS);
+	local questItemsCategory = ArkInventorySearch_Stockpile.CreateCategory(AUCTION_CATEGORY_QUEST_ITEMS);
 	questItemsCategory:AddFilter(LE_ITEM_CLASS_QUESTITEM);
 end
 
 do -- Miscellaneous
-	local miscellaneousCategory = StockpileFrame_CreateCategory(AUCTION_CATEGORY_MISCELLANEOUS);
+	local miscellaneousCategory = ArkInventorySearch_Stockpile.CreateCategory(AUCTION_CATEGORY_MISCELLANEOUS);
 	miscellaneousCategory:CreateSubCategoryAndFilter(LE_ITEM_CLASS_MISCELLANEOUS, LE_ITEM_MISCELLANEOUS_JUNK);
 	miscellaneousCategory:CreateSubCategoryAndFilter(LE_ITEM_CLASS_MISCELLANEOUS, LE_ITEM_MISCELLANEOUS_REAGENT);
 	miscellaneousCategory:CreateSubCategoryAndFilter(LE_ITEM_CLASS_MISCELLANEOUS, LE_ITEM_MISCELLANEOUS_HOLIDAY);
@@ -498,7 +399,7 @@ do -- Miscellaneous
 end
 
 -- do -- WoW Token
-	-- local wowTokenCategory = StockpileFrame_CreateCategory(TOKEN_FILTER_LABEL);
+	-- local wowTokenCategory = ArkInventorySearch_Stockpile.CreateCategory(TOKEN_FILTER_LABEL);
 	-- wowTokenCategory:AddFilter(ITEM_CLASS_WOW_TOKEN);
 	-- wowTokenCategory:SetFlag("WOW_TOKEN_FLAG");
 -- end

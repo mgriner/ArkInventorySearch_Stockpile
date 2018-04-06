@@ -179,7 +179,7 @@
 					</Layer>
 				</Layers>
 				<Frames>
-					<Button name="StockpileFilterButton1" inherits="AuctionClassButtonTemplate" id="1">
+					<Button name="StockpileFilterButton1" inherits="StockpileClassButtonTemplate" id="1">
 						<Anchors>
 							<Anchor point="TOPLEFT">
 								<Offset>
@@ -188,7 +188,7 @@
 							</Anchor>
 						</Anchors>
 					</Button>
-					<Button name="StockpileFilterButton2" inherits="AuctionClassButtonTemplate" id="2">
+					<Button name="StockpileFilterButton2" inherits="StockpileClassButtonTemplate" id="2">
 						<Anchors>
 							<Anchor point="TOPLEFT" relativeTo="StockpileFilterButton1" relativePoint="BOTTOMLEFT">
 								<Offset>
@@ -197,7 +197,7 @@
 							</Anchor>
 						</Anchors>
 					</Button>
-					<Button name="StockpileFilterButton3" inherits="AuctionClassButtonTemplate" id="3">
+					<Button name="StockpileFilterButton3" inherits="StockpileClassButtonTemplate" id="3">
 						<Anchors>
 							<Anchor point="TOPLEFT" relativeTo="StockpileFilterButton2" relativePoint="BOTTOMLEFT">
 								<Offset>
@@ -206,7 +206,7 @@
 							</Anchor>
 						</Anchors>
 					</Button>
-					<Button name="StockpileFilterButton4" inherits="AuctionClassButtonTemplate" id="4">
+					<Button name="StockpileFilterButton4" inherits="StockpileClassButtonTemplate" id="4">
 						<Anchors>
 							<Anchor point="TOPLEFT" relativeTo="StockpileFilterButton3" relativePoint="BOTTOMLEFT">
 								<Offset>
@@ -215,7 +215,7 @@
 							</Anchor>
 						</Anchors>
 					</Button>
-					<Button name="StockpileFilterButton5" inherits="AuctionClassButtonTemplate" id="5">
+					<Button name="StockpileFilterButton5" inherits="StockpileClassButtonTemplate" id="5">
 						<Anchors>
 							<Anchor point="TOPLEFT" relativeTo="StockpileFilterButton4" relativePoint="BOTTOMLEFT">
 								<Offset>
@@ -224,7 +224,7 @@
 							</Anchor>
 						</Anchors>
 					</Button>
-					<Button name="StockpileFilterButton6" inherits="AuctionClassButtonTemplate" id="6">
+					<Button name="StockpileFilterButton6" inherits="StockpileClassButtonTemplate" id="6">
 						<Anchors>
 							<Anchor point="TOPLEFT" relativeTo="StockpileFilterButton5" relativePoint="BOTTOMLEFT">
 								<Offset>
@@ -233,7 +233,7 @@
 							</Anchor>
 						</Anchors>
 					</Button>
-					<Button name="StockpileFilterButton7" inherits="AuctionClassButtonTemplate" id="7">
+					<Button name="StockpileFilterButton7" inherits="StockpileClassButtonTemplate" id="7">
 						<Anchors>
 							<Anchor point="TOPLEFT" relativeTo="StockpileFilterButton6" relativePoint="BOTTOMLEFT">
 								<Offset>
@@ -242,7 +242,7 @@
 							</Anchor>
 						</Anchors>
 					</Button>
-					<Button name="StockpileFilterButton8" inherits="AuctionClassButtonTemplate" id="8">
+					<Button name="StockpileFilterButton8" inherits="StockpileClassButtonTemplate" id="8">
 						<Anchors>
 							<Anchor point="TOPLEFT" relativeTo="StockpileFilterButton7" relativePoint="BOTTOMLEFT">
 								<Offset>
@@ -251,7 +251,7 @@
 							</Anchor>
 						</Anchors>
 					</Button>
-					<Button name="StockpileFilterButton9" inherits="AuctionClassButtonTemplate" id="9">
+					<Button name="StockpileFilterButton9" inherits="StockpileClassButtonTemplate" id="9">
 						<Anchors>
 							<Anchor point="TOPLEFT" relativeTo="StockpileFilterButton8" relativePoint="BOTTOMLEFT">
 								<Offset>
@@ -260,7 +260,7 @@
 							</Anchor>
 						</Anchors>
 					</Button>
-					<Button name="StockpileFilterButton10" inherits="AuctionClassButtonTemplate" id="10">
+					<Button name="StockpileFilterButton10" inherits="StockpileClassButtonTemplate" id="10">
 						<Anchors>
 							<Anchor point="TOPLEFT" relativeTo="StockpileFilterButton9" relativePoint="BOTTOMLEFT">
 								<Offset>
@@ -269,7 +269,7 @@
 							</Anchor>
 						</Anchors>
 					</Button>
-					<Button name="StockpileFilterButton11" inherits="AuctionClassButtonTemplate" id="11">
+					<Button name="StockpileFilterButton11" inherits="StockpileClassButtonTemplate" id="11">
 						<Anchors>
 							<Anchor point="TOPLEFT" relativeTo="StockpileFilterButton10" relativePoint="BOTTOMLEFT">
 								<Offset>
@@ -278,7 +278,7 @@
 							</Anchor>
 						</Anchors>
 					</Button>
-					<Button name="StockpileFilterButton12" inherits="AuctionClassButtonTemplate" id="12">
+					<Button name="StockpileFilterButton12" inherits="StockpileClassButtonTemplate" id="12">
 						<Anchors>
 							<Anchor point="TOPLEFT" relativeTo="StockpileFilterButton11" relativePoint="BOTTOMLEFT">
 								<Offset>
@@ -287,7 +287,7 @@
 							</Anchor>
 						</Anchors>
 					</Button>
-					<Button name="StockpileFilterButton13" inherits="AuctionClassButtonTemplate" id="13">
+					<Button name="StockpileFilterButton13" inherits="StockpileClassButtonTemplate" id="13">
 						<Anchors>
 							<Anchor point="TOPLEFT" relativeTo="StockpileFilterButton12" relativePoint="BOTTOMLEFT">
 								<Offset>
@@ -296,7 +296,7 @@
 							</Anchor>
 						</Anchors>
 					</Button>
-					<Button name="StockpileFilterButton14" inherits="AuctionClassButtonTemplate" id="14">
+					<Button name="StockpileFilterButton14" inherits="StockpileClassButtonTemplate" id="14">
 						<Anchors>
 							<Anchor point="TOPLEFT" relativeTo="StockpileFilterButton13" relativePoint="BOTTOMLEFT">
 								<Offset>
@@ -305,7 +305,7 @@
 							</Anchor>
 						</Anchors>
 					</Button>
-					<Button name="StockpileFilterButton15" inherits="AuctionClassButtonTemplate" id="15">
+					<Button name="StockpileFilterButton15" inherits="StockpileClassButtonTemplate" id="15">
 						<Anchors>
 							<Anchor point="TOPLEFT" relativeTo="StockpileFilterButton14" relativePoint="BOTTOMLEFT">
 								<Offset>
@@ -357,7 +357,7 @@
 						</Layers>
 						<Scripts>
 							<OnVerticalScroll>
-								FauxScrollFrame_OnVerticalScroll(self, offset, BROWSE_FILTER_HEIGHT, function() StockpileFrameFilters_Update() end);
+								FauxScrollFrame_OnVerticalScroll(self, offset, BROWSE_FILTER_HEIGHT, function() ArkInventorySearch_Stockpile.StockpileFrameFilters_Update() end);
 							</OnVerticalScroll>
 						</Scripts>
 					</ScrollFrame>
@@ -404,7 +404,7 @@
 						</Layers>
 						<Scripts>
 							<OnVerticalScroll>
-								FauxScrollFrame_OnVerticalScroll(self, offset, AUCTIONS_BUTTON_HEIGHT, StockpileFrameBrowse_Update);
+								FauxScrollFrame_OnVerticalScroll(self, offset, AUCTIONS_BUTTON_HEIGHT, ArkInventorySearch_Stockpile.StockpileFrameBrowse_Update);
 							</OnVerticalScroll>
 						</Scripts>
 					</ScrollFrame>
@@ -736,7 +736,7 @@
 							<OnShow function="BrowseWowTokenResults_OnShow"/>
 						</Scripts>
 					</Frame> -->
-					<Button name="StockpileBrowseNameSort" inherits="AuctionSortButtonTemplate" text="NAME">
+					<Button name="StockpileBrowseNameSort" inherits="StockpileSortButtonTemplate" text="NAME">
 						<Size>
 							<AbsDimension x="214" y="19"/>
 						</Size>
@@ -749,11 +749,11 @@
 						</Anchors>
 						<Scripts>
 							<OnClick>
-								StockpileFrame_OnClickSortColumn("list", "name")
+								ArkInventorySearch_Stockpile.StockpileFrame_OnClickSortColumn("list", "name")
 							</OnClick>
 						</Scripts>
 					</Button>
-					<Button name="StockpileBrowseLevelSort" inherits="AuctionSortButtonTemplate" text="REQ_LEVEL_ABBR">
+					<Button name="StockpileBrowseLevelSort" inherits="StockpileSortButtonTemplate" text="REQ_LEVEL_ABBR">
 						<Size>
 							<AbsDimension x="57" y="19"/>
 						</Size>
@@ -766,13 +766,13 @@
 						</Anchors>
 						<Scripts>
 							<OnClick>
-								StockpileFrame_OnClickSortColumn("list", "level")
+								ArkInventorySearch_Stockpile.StockpileFrame_OnClickSortColumn("list", "level")
 							</OnClick>
 						</Scripts>
 					</Button>
-					<Button name="StockpileBrowseDurationSort" inherits="AuctionSortButtonTemplate" text="CLOSES_IN">
+					<Button name="StockpileBrowseItemLevelSort" inherits="StockpileSortButtonTemplate" text="ITEM_LEVEL_ABBR">
 						<Size>
-							<AbsDimension x="91" y="19"/>
+							<AbsDimension x="57" y="19"/>
 						</Size>
 						<Anchors>
 							<Anchor point="LEFT" relativeTo="StockpileBrowseLevelSort" relativePoint="RIGHT">
@@ -783,16 +783,16 @@
 						</Anchors>
 						<Scripts>
 							<OnClick>
-								StockpileFrame_OnClickSortColumn("list", "duration")
+								ArkInventorySearch_Stockpile.StockpileFrame_OnClickSortColumn("list", "itemLevel")
 							</OnClick>
 						</Scripts>
 					</Button>
-					<Button name="StockpileBrowseHighBidderSort" inherits="AuctionSortButtonTemplate" text="AUCTION_CREATOR">
+					<Button name="StockpileBrowseItemTypeColumnSort" inherits="StockpileSortButtonTemplate" text="CATEGORY">
 						<Size>
-							<AbsDimension x="76" y="19"/>
+							<AbsDimension x="142" y="19"/>
 						</Size>
 						<Anchors>
-							<Anchor point="LEFT" relativeTo="StockpileBrowseDurationSort" relativePoint="RIGHT">
+							<Anchor point="LEFT" relativeTo="StockpileBrowseItemLevelSort" relativePoint="RIGHT">
 								<Offset>
 									<AbsDimension x="-2" y="0"/>
 								</Offset>
@@ -800,16 +800,16 @@
 						</Anchors>
 						<Scripts>
 							<OnClick>
-								StockpileFrame_OnClickSortColumn("list", "seller")
+								ArkInventorySearch_Stockpile.StockpileFrame_OnClickSortColumn("list", "itemType")
 							</OnClick>
 						</Scripts>
 					</Button>
-					<Button name="StockpileBrowseCurrentBidSort" inherits="AuctionSortButtonTemplate" text="AUCTION_BROWSE_UNIT_PRICE_SORT">
+					<Button name="StockpileBrowseItemSubtypeSort" inherits="StockpileSortButtonTemplate" text="SUBCATEGORY">
 						<Size>
-							<AbsDimension x="207" y="19"/>
+							<AbsDimension x="142" y="19"/>
 						</Size>
 						<Anchors>
-							<Anchor point="LEFT" relativeTo="StockpileBrowseHighBidderSort" relativePoint="RIGHT">
+							<Anchor point="LEFT" relativeTo="StockpileBrowseItemTypeColumnSort" relativePoint="RIGHT">
 								<Offset>
 									<AbsDimension x="-2" y="0"/>
 								</Offset>
@@ -817,7 +817,7 @@
 						</Anchors>
 						<Scripts>
 							<OnClick>
-								StockpileFrame_OnClickSortColumn("list", "unitprice");
+								ArkInventorySearch_Stockpile.StockpileFrame_OnClickSortColumn("list", "itemSubtype");
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -913,10 +913,10 @@
 								end
 							</OnTabPressed>
 							<OnCursorChanged>
-								StockpileFrameBrowse_Search();
+								ArkInventorySearch_Stockpile.StockpileFrameBrowse_Search();
 							</OnCursorChanged>
 							<OnEnterPressed inherit="append">
-								StockpileFrameBrowse_Search();
+								ArkInventorySearch_Stockpile.StockpileFrameBrowse_Search();
 								self:ClearFocus();
 							</OnEnterPressed>
 						</Scripts>
@@ -956,7 +956,7 @@
 							</OnTabPressed>
 							<OnEnterPressed function="EditBox_ClearFocus"/>
 							<OnCursorChanged>
-								StockpileFrameBrowse_Search();
+								ArkInventorySearch_Stockpile.StockpileFrameBrowse_Search();
 							</OnCursorChanged>
 						</Scripts>
 					</EditBox>
@@ -981,7 +981,7 @@
 							</OnTabPressed>
 							<OnEnterPressed function="EditBox_ClearFocus"/>
 							<OnCursorChanged>
-								StockpileFrameBrowse_Search();
+								ArkInventorySearch_Stockpile.StockpileFrameBrowse_Search();
 							</OnCursorChanged>
 						</Scripts>
 					</EditBox>
@@ -1019,7 +1019,7 @@
 							</OnTabPressed>
 							<OnEnterPressed function="EditBox_ClearFocus"/>
 							<OnCursorChanged>
-								StockpileFrameBrowse_Search();
+								ArkInventorySearch_Stockpile.StockpileFrameBrowse_Search();
 							</OnCursorChanged>
 						</Scripts>
 					</EditBox>
@@ -1044,7 +1044,7 @@
 							</OnTabPressed>
 							<OnEnterPressed function="EditBox_ClearFocus"/>
 							<OnCursorChanged>
-								StockpileFrameBrowse_Search();
+								ArkInventorySearch_Stockpile.StockpileFrameBrowse_Search();
 							</OnCursorChanged>
 						</Scripts>
 					</EditBox>
@@ -1070,8 +1070,12 @@
 							</Layer>
 						</Layers>
 						<Scripts>
-							<OnLoad function="StockpileBrowseDropDown_OnLoad"/>
-							<OnShow function="StockpileBrowseDropDown_OnLoad"/>
+							<OnLoad>
+								ArkInventorySearch_Stockpile.StockpileBrowseDropDown_OnLoad(self);
+							</OnLoad>
+							<OnShow>
+								ArkInventorySearch_Stockpile.StockpileBrowseDropDown_OnLoad(self);
+							</OnShow>
 						</Scripts>
 					</Frame>
 					<CheckButton name="StockpileIsUsableCheckButton" inherits="UICheckButtonTemplate">
@@ -1092,7 +1096,7 @@
 							</OnLoad>
 							<OnClick>
 								PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON);
-								StockpileFrameBrowse_Search();
+								ArkInventorySearch_Stockpile.StockpileFrameBrowse_Search();
 							</OnClick>
 						</Scripts>
 					</CheckButton>
@@ -1134,8 +1138,12 @@
 							<Anchor point="TOPRIGHT" x="67" y="-35"/>
 						</Anchors>
 						<Scripts>
-							<OnClick function="StockpileFrameBrowse_Reset"/>
-							<OnUpdate function="StockpileBrowseResetButton_OnUpdate"/>
+							<OnClick>
+								ArkInventorySearch_Stockpile.StockpileFrameBrowse_Reset(self);
+							</OnClick>
+							<OnUpdate>
+								ArkInventorySearch_Stockpile.StockpileBrowseResetButton_OnUpdate(self);
+							</OnUpdate>
 						</Scripts>
 					</Button>
 					<Button name="StockpileBrowseSearchButton" inherits="UIPanelButtonTemplate" text="SEARCH">
@@ -1147,7 +1155,7 @@
 						</Anchors>
 						<Scripts>
 							<OnClick>
-								StockpileFrameBrowse_Search();
+								ArkInventorySearch_Stockpile.StockpileFrameBrowse_Search();
 							</OnClick>
 							<OnUpdate function="StockpileBrowseSearchButton_OnUpdate"/>
 						</Scripts>
@@ -1181,7 +1189,7 @@
 								StockpileFrameBrowse.page = StockpileFrameBrowse.page - 1;
 								self:Disable();
 								StockpileBrowseScrollFrameScrollBar:SetValue(0);
-								StockpileFrameBrowse_Search();
+								ArkInventorySearch_Stockpile.StockpileFrameBrowse_Search();
 							</OnClick>
 						</Scripts>
 						<NormalTexture file="Interface\Buttons\UI-SpellbookIcon-PrevPage-Up"/>
@@ -1218,7 +1226,7 @@
 								StockpileFrameBrowse.page = StockpileFrameBrowse.page + 1;
 								self:Disable();
 								StockpileBrowseScrollFrameScrollBar:SetValue(0);
-								StockpileFrameBrowse_Search();
+								ArkInventorySearch_Stockpile.StockpileFrameBrowse_Search();
 							</OnClick>
 						</Scripts>
 						<NormalTexture file="Interface\Buttons\UI-SpellbookIcon-NextPage-Up"/>
@@ -1328,7 +1336,7 @@
 							</OnLoad>
 							<OnClick>
 								PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON);
-								StockpileFrameBrowse_Search();
+								ArkInventorySearch_Stockpile.StockpileFrameBrowse_Search();
 							</OnClick>
 							<OnEnter>
 								GameTooltip:SetOwner(self, "ANCHOR_LEFT");
@@ -1339,9 +1347,12 @@
 					</CheckButton>
 				</Frames>
 				<Scripts>
-					<OnLoad function="StockpileFrameBrowse_OnLoad"/>
-					<OnShow function="StockpileFrameBrowse_OnShow"/>
-					<OnEvent function="StockpileFrameBrowse_OnEvent"/>
+					<OnLoad>
+						ArkInventorySearch_Stockpile.StockpileFrameBrowse_OnLoad(self);
+					</OnLoad>
+					<OnShow>
+						ArkInventorySearch_Stockpile.StockpileFrameBrowse_OnShow();
+					</OnShow>
 				</Scripts>
 			</Frame>
 			<!-- Bid Tab -->
@@ -1377,7 +1388,7 @@
 					</Layer>
 				</Layers>
 				<Frames>
-					<Button name="BidQualitySort" inherits="AuctionSortButtonTemplate" text="RARITY">
+					<Button name="BidQualitySort" inherits="StockpileSortButtonTemplate" text="RARITY">
 						<Size>
 							<AbsDimension x="195" y="19"/>
 						</Size>
@@ -1390,11 +1401,11 @@
 						</Anchors>
 						<Scripts>
 							<OnClick>
-								StockpileFrame_OnClickSortColumn("bidder", "quality")
+								ArkInventorySearch_Stockpile.StockpileFrame_OnClickSortColumn("bidder", "quality")
 							</OnClick>
 						</Scripts>
 					</Button>
-					<Button name="BidLevelSort" inherits="AuctionSortButtonTemplate" text="REQ_LEVEL_ABBR">
+					<Button name="BidLevelSort" inherits="StockpileSortButtonTemplate" text="REQ_LEVEL_ABBR">
 						<Size>
 							<AbsDimension x="61" y="19"/>
 						</Size>
@@ -1407,11 +1418,11 @@
 						</Anchors>
 						<Scripts>
 							<OnClick>
-								StockpileFrame_OnClickSortColumn("bidder", "level")
+								ArkInventorySearch_Stockpile.StockpileFrame_OnClickSortColumn("bidder", "level")
 							</OnClick>
 						</Scripts>
 					</Button>
-					<Button name="BidDurationSort" inherits="AuctionSortButtonTemplate" text="CLOSES_IN">
+					<Button name="BidDurationSort" inherits="StockpileSortButtonTemplate" text="CLOSES_IN">
 						<Size>
 							<AbsDimension x="79" y="19"/>
 						</Size>
@@ -1424,11 +1435,11 @@
 						</Anchors>
 						<Scripts>
 							<OnClick>
-								StockpileFrame_OnClickSortColumn("bidder", "duration")
+								ArkInventorySearch_Stockpile.StockpileFrame_OnClickSortColumn("bidder", "duration")
 							</OnClick>
 						</Scripts>
 					</Button>
-					<Button name="BidBuyoutSort" inherits="AuctionSortButtonTemplate" text="BUYOUT_PRICE">
+					<Button name="BidBuyoutSort" inherits="StockpileSortButtonTemplate" text="BUYOUT_PRICE">
 						<Size>
 							<AbsDimension x="166" y="19"/>
 						</Size>
@@ -1441,11 +1452,11 @@
 						</Anchors>
 						<Scripts>
 							<OnClick>
-								StockpileFrame_OnClickSortColumn("bidder", "buyout")
+								ArkInventorySearch_Stockpile.StockpileFrame_OnClickSortColumn("bidder", "buyout")
 							</OnClick>
 						</Scripts>
 					</Button>
-					<Button name="BidStatusSort" inherits="AuctionSortButtonTemplate" text="BID_STATUS">
+					<Button name="BidStatusSort" inherits="StockpileSortButtonTemplate" text="BID_STATUS">
 						<Size>
 							<AbsDimension x="94" y="19"/>
 						</Size>
@@ -1458,11 +1469,11 @@
 						</Anchors>
 						<Scripts>
 							<OnClick>
-								StockpileFrame_OnClickSortColumn("bidder", "status")
+								ArkInventorySearch_Stockpile.StockpileFrame_OnClickSortColumn("bidder", "status")
 							</OnClick>
 						</Scripts>
 					</Button>
-					<Button name="BidBidSort" inherits="AuctionSortButtonTemplate" text="CURRENT_BID">
+					<Button name="BidBidSort" inherits="StockpileSortButtonTemplate" text="CURRENT_BID">
 						<Size>
 							<AbsDimension x="169" y="19"/>
 						</Size>
@@ -1475,7 +1486,7 @@
 						</Anchors>
 						<Scripts>
 							<OnClick>
-								StockpileFrame_OnClickSortColumn("bidder", "bid")
+								ArkInventorySearch_Stockpile.StockpileFrame_OnClickSortColumn("bidder", "bid")
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -1710,7 +1721,7 @@
 						</Layers>
 						<Scripts>
 							<OnClick>
-								PlaceAuctionBid("bidder", GetSelectedAuctionItem("bidder"), MoneyInputFrame_GetCopper(BidBidPrice))
+								PlaceAuctionBid("bidder", ArkInventorySearch_Stockpile.GetSelectedStockpileItem("bidder"), MoneyInputFrame_GetCopper(BidBidPrice))
 								self:Disable();
 							</OnClick>
 						</Scripts>
@@ -1760,47 +1771,47 @@
 					</Layer>
 				</Layers>
 				<Frames>
-					<Button name="AuctionsQualitySort" inherits="AuctionSortButtonTemplate" text="RARITY">
+					<Button name="AuctionsQualitySort" inherits="StockpileSortButtonTemplate" text="RARITY">
 						<Size x="185" y="19"/>
 						<Anchors>
 							<Anchor point="TOPLEFT" x="219" y="-51"/>
 						</Anchors>
 						<Scripts>
 							<OnClick>
-								StockpileFrame_OnClickSortColumn("owner", "quality")
+								ArkInventorySearch_Stockpile.StockpileFrame_OnClickSortColumn("owner", "quality")
 							</OnClick>
 						</Scripts>
 					</Button>
-					<Button name="AuctionsDurationSort" inherits="AuctionSortButtonTemplate" text="CLOSES_IN">
+					<Button name="AuctionsDurationSort" inherits="StockpileSortButtonTemplate" text="CLOSES_IN">
 						<Size x="100" y="19"/>
 						<Anchors>
 							<Anchor point="LEFT" relativeTo="AuctionsQualitySort" relativePoint="RIGHT" x="-2" y="0"/>
 						</Anchors>
 						<Scripts>
 							<OnClick>
-								StockpileFrame_OnClickSortColumn("owner", "duration")
+								ArkInventorySearch_Stockpile.StockpileFrame_OnClickSortColumn("owner", "duration")
 							</OnClick>
 						</Scripts>
 					</Button>
-					<Button name="AuctionsHighBidderSort" inherits="AuctionSortButtonTemplate" text="HIGH_BIDDER">
+					<Button name="AuctionsItemTypeColumnSort" inherits="StockpileSortButtonTemplate" text="HIGH_BIDDER">
 						<Size x="108" y="19"/>
 						<Anchors>
 							<Anchor point="LEFT" relativeTo="AuctionsDurationSort" relativePoint="RIGHT" x="-2" y="0"/>
 						</Anchors>
 						<Scripts>
 							<OnClick>
-								StockpileFrame_OnClickSortColumn("owner", "status")
+								ArkInventorySearch_Stockpile.StockpileFrame_OnClickSortColumn("owner", "status")
 							</OnClick>
 						</Scripts>
 					</Button>
-					<Button name="AuctionsBidSort" inherits="AuctionSortButtonTemplate" text="CURRENT_BID">
+					<Button name="AuctionsBidSort" inherits="StockpileSortButtonTemplate" text="CURRENT_BID">
 						<Size x="213" y="19"/>
 						<Anchors>
-							<Anchor point="LEFT" relativeTo="AuctionsHighBidderSort" relativePoint="RIGHT" x="-2" y="0"/>
+							<Anchor point="LEFT" relativeTo="AuctionsItemTypeColumnSort" relativePoint="RIGHT" x="-2" y="0"/>
 						</Anchors>
 						<Scripts>
 							<OnClick>
-								StockpileFrame_OnClickSortColumn("owner", "bid")
+								ArkInventorySearch_Stockpile.StockpileFrame_OnClickSortColumn("owner", "bid")
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -2293,7 +2304,7 @@
 							</Frame>
 						</Frames>
 						<Scripts>
-							<OnLoad function="AuctionsWowTokenStockpileFrame_OnLoad"/>
+							<OnLoad function="AuctionsWowTokenArkInventorySearch_Stockpile.StockpileFrame_OnLoad"/>
 							<OnEvent function="AuctionsWowTokenStockpileFrame_OnEvent"/>
 						</Scripts>
 					</Frame>
@@ -2327,7 +2338,7 @@
 						</Anchors>
 						<Scripts>
 							<OnClick>
-								if ( GetSelectedAuctionItem("owner") and (GetSelectedAuctionItem("owner") > 0) ) then
+								if ( ArkInventorySearch_Stockpile.GetSelectedStockpileItem("owner") and (ArkInventorySearch_Stockpile.GetSelectedStockpileItem("owner") > 0) ) then
 									StaticPopup_Show("CANCEL_AUCTION");
 								end
 							</OnClick>
@@ -2385,16 +2396,15 @@
 			</Frame> -->
 		</Frames>
 		<Scripts>
-			<OnLoad function="StockpileFrame_OnLoad"/>
-			<OnShow function="StockpileFrame_OnShow"/>
+			<OnLoad>
+				ArkInventorySearch_Stockpile.StockpileFrame_OnLoad(self);
+			</OnLoad>
+			<OnShow>
+				ArkInventorySearch_Stockpile.StockpileFrame_OnShow(self);
+			</OnShow>
 			<OnHide>
 				PlaySound(SOUNDKIT.AUCTION_WINDOW_CLOSE);
-				StaticPopup_Hide("BUYOUT_AUCTION");
-				StaticPopup_Hide("CANCEL_AUCTION");
-				<!-- WowTokenGameTimeTutorial:Hide(); -->
 				CloseSideDressUpFrame(self);
-				SetAuctionsTabShowing(false);
-				CloseAuctionHouse();
 			</OnHide>
 			<OnDragStart>self:StartMoving();</OnDragStart>
 			<OnDragStop>self:StopMovingOrSizing();</OnDragStop>
