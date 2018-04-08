@@ -236,12 +236,14 @@ function ArkInventorySearch_Stockpile.AddItemsToSearchCache( object_info_table )
 		-- Make sure we add a search cache index entry for reverse lookups
 		ArkInventorySearch_Stockpile.AddSearchCacheIndex( object_info.location_object.player_id, object_info.location_object.location_id, object_info.location_object.bag_id, object_id )
 		
+		-- Flag that the search cache has been updated
+		ArkInventorySearch_Stockpile.IsGlobalSearchCacheUpdated = true;
+		
 	end
 	
 	-- Make sure the UI exists, ignore table refresh if we are building the whole cache (performance)
-	if ARKINV_Search_Stockpile and not ArkInventorySearch_Stockpile.IsBuilding then
-		print("refreshing table...")
-		ArkInventorySearch_Stockpile.Frame_Table_Refresh( )
+	if StockpileFrame and not ArkInventorySearch_Stockpile.IsBuilding then
+		ArkInventorySearch_Stockpile.StockpileFrameBrowse_Search();
 	end
 	
 end
@@ -449,7 +451,7 @@ function ArkInventorySearch_Stockpile:EVENT_ARKINV_BUILD_GLOBAL_CACHE( )
 	end
 	ArkInventorySearch_Stockpile.IsBuilding = false
 	print("Empty count: " .. empty_count)
-	if ARKINV_Search_Stockpile and not ArkInventorySearch_Stockpile.IsBuilding then
-		ArkInventorySearch_Stockpile.Frame_Table_Refresh( )
+	if StockpileFrame and not ArkInventorySearch_Stockpile.IsBuilding then
+		ArkInventorySearch_Stockpile.StockpileFrameBrowse_Search();
 	end
 end

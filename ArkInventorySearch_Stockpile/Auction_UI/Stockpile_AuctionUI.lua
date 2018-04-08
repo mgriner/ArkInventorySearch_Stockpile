@@ -93,7 +93,7 @@ function ArkInventorySearch_Stockpile:EVENT_STOCKPILE_CACHE_ITEM_LIST_UPDATE( )
 end
 
 function ArkInventorySearch_Stockpile.GetSearchTableItemLink( index )
-	return ArkInventory.Search.SourceTable[index].h or ""
+	return ArkInventorySearch_Stockpile.SearchResultsTable[index].h or ""
 end
 
 function ArkInventorySearch_Stockpile.StockpileBrowseButton_OnClick(button)
@@ -244,11 +244,11 @@ function ArkInventorySearch_Stockpile.StockpileBrowseResetButton_OnUpdate(self, 
 end
 
 function ArkInventorySearch_Stockpile.StockpileFrame_SortStockpileDoSort(sortTable, sortColumn, sortOptions)
-	if not ArkInventory.Search.SourceTable then
+	if not ArkInventorySearch_Stockpile.SearchResultsTable then
 		return
 	end
 	if sortTable == "list" then
-		table.sort( ArkInventory.Search.SourceTable, function(a, b)
+		table.sort( ArkInventorySearch_Stockpile.SearchResultsTable, function(a, b)
 			for _, sortRow in pairs( sortOptions ) do
 				-- default a-z sort when not explicitly sorting by name
 				if sortColumn ~= "name" and sortRow.column == "name" then
@@ -267,22 +267,22 @@ function ArkInventorySearch_Stockpile.StockpileFrame_SortStockpileDoSort(sortTab
 		end);
 		-- if sortColumn == "name" then
 			-- if sortReverse then
-				-- if #ArkInventory.Search.SourceTable > 0 then
-					-- table.sort( ArkInventory.Search.SourceTable, function( a, b ) return a.sorted > b.sorted end )
+				-- if #ArkInventorySearch_Stockpile.SearchResultsTable > 0 then
+					-- table.sort( ArkInventorySearch_Stockpile.SearchResultsTable, function( a, b ) return a.sorted > b.sorted end )
 				-- end
 			-- else
-				-- if #ArkInventory.Search.SourceTable > 0 then
-					-- table.sort( ArkInventory.Search.SourceTable, function( a, b ) return a.sorted < b.sorted end )
+				-- if #ArkInventorySearch_Stockpile.SearchResultsTable > 0 then
+					-- table.sort( ArkInventorySearch_Stockpile.SearchResultsTable, function( a, b ) return a.sorted < b.sorted end )
 				-- end
 			-- end
 		-- elseif sortColumn == "level" then
 			-- if sortReverse then
-				-- if #ArkInventory.Search.SourceTable > 0 then
-					-- table.sort( ArkInventory.Search.SourceTable, function( a, b ) return a.uselevel > b.uselevel end )
+				-- if #ArkInventorySearch_Stockpile.SearchResultsTable > 0 then
+					-- table.sort( ArkInventorySearch_Stockpile.SearchResultsTable, function( a, b ) return a.uselevel > b.uselevel end )
 				-- end
 			-- else
-				-- if #ArkInventory.Search.SourceTable > 0 then
-					-- table.sort( ArkInventory.Search.SourceTable, function( a, b ) return a.uselevel < b.uselevel end )
+				-- if #ArkInventorySearch_Stockpile.SearchResultsTable > 0 then
+					-- table.sort( ArkInventorySearch_Stockpile.SearchResultsTable, function( a, b ) return a.uselevel < b.uselevel end )
 				-- end
 			-- end
 		-- end
@@ -364,8 +364,8 @@ local function StockpileFrameBrowse_SearchHelper(...)
 		-- not filtering by category, leave nil for all
 	end
 	
-	local should_update = false
-	local should_filter = false
+	local should_update = ArkInventorySearch_Stockpile.IsGlobalSearchCacheUpdated
+	local should_filter = ArkInventorySearch_Stockpile.IsGlobalSearchCacheUpdated
 	if ( not prevBrowseParams ) then
 		-- if we are doing a search for the first time then create the browse param cache
 		prevBrowseParams = { };
@@ -636,8 +636,8 @@ function ArkInventorySearch_Stockpile.StockpileFrameBrowse_Update()
 		-- Update sort arrows
 		ArkInventorySearch_Stockpile.StockpileFrameBrowse_UpdateArrows();
 
-		numBatchAuctions = #ArkInventory.Search.SourceTable
-		totalAuctions = #ArkInventory.Search.SourceTable
+		numBatchAuctions = #ArkInventorySearch_Stockpile.SearchResultsTable
+		totalAuctions = #ArkInventorySearch_Stockpile.SearchResultsTable
 
 		-- Show the no results text if no items found
 		if ( numBatchAuctions == 0 ) then
@@ -653,7 +653,7 @@ function ArkInventorySearch_Stockpile.StockpileFrameBrowse_Update()
 			button = _G["StockpileBrowseButton"..i];
 			local shouldHide = index > (numBatchAuctions + (NUM_AUCTION_ITEMS_PER_PAGE * StockpileFrameBrowse.page));
 			if ( not shouldHide ) then
-				item_info =  ArkInventory.Search.SourceTable[index];
+				item_info =  ArkInventorySearch_Stockpile.SearchResultsTable[index];
 				item_info.count = 2
 				
 				name = item_info.name
@@ -788,7 +788,7 @@ function ArkInventorySearch_Stockpile.StockpileFrameItem_OnEnter(self, type, ind
 	GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
 
 	--local hasCooldown, speciesID, level, breedQuality, maxHealth, power, speed, name = GameTooltip:SetAuctionItem(type, index);
-	local item_h = ArkInventory.Search.SourceTable[index].h or ""
+	local item_h = ArkInventorySearch_Stockpile.SearchResultsTable[index].h or ""
 
 	ArkInventory.GameTooltipSetHyperlink( self, item_h )
 

@@ -9,7 +9,7 @@
 
 ## DefaultState: Enabled
 ## LoadOnDemand: 0
-## RequiredDeps: ArkInventory, ArkInventorySearch
+## RequiredDeps: ArkInventory
 
 ArkInventorySearch_Stockpile.lua
 ArkInventorySearch_Stockpile_SearchModule.lua

@@ -124,9 +124,9 @@ end
 ArkInventorySearch_Stockpile:RegisterChatCommand("aisp-refreshtable", "CommandRefreshSearchTable")
 
 function ArkInventorySearch_Stockpile.CommandRefreshSearchTable( )
-	if ARKINV_Search_Stockpile and not ArkInventorySearch_Stockpile.IsBuilding then
+	if StockpileFrame and not ArkInventorySearch_Stockpile.IsBuilding then
 		print("refreshing table...")
-		ArkInventorySearch_Stockpile.Frame_Table_Refresh( )
+		ArkInventorySearch_Stockpile.StockpileFrameBrowse_Search();
 	end
 end
 

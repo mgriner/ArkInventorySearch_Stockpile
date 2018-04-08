@@ -10,12 +10,16 @@ local table = _G.table
 ArkInventorySearch_Stockpile.SearchModule = ArkInventorySearch_Stockpile:NewModule( "ArkInventorySearch_Stockpile" )
 
 function ArkInventorySearch_Stockpile.SearchModule:OnEnable( )
-	ArkInventory.Search.Frame_Hide( )
-	ArkInventory:DisableModule( "ArkInventorySearch" )
-	ArkInventory.Search.frame = StockpileFrame	--ARKINV_Search_Stockpile
-	ArkInventory.Search.rebuild = true
-	ArkInventory.Search.SourceTable = { }
-	ArkInventorySearch_Stockpile.SearchModule.cache = { }
+	if ArkInventory.Search then
+		ArkInventory.Search.Frame_Hide( )
+		ArkInventorySearch_Stockpile.OldSearchFrame = ArkInventory.Search.frame
+		ArkInventory.Search.frame = StockpileFrame	--ARKINV_Search_Stockpile
+	end
+	
+	ArkInventorySearch_Stockpile.GlobalSearchCache = { }
+	ArkInventorySearch_Stockpile.GlobalSearchCacheIndexLookup = { }
+	ArkInventorySearch_Stockpile.ItemLoadingPool = { }
+	ArkInventorySearch_Stockpile.SearchResultsTable = { }
 	
 	-- registering global cache specific events
 	ArkInventorySearch_Stockpile:RegisterEvent( "PLAYER_ALIVE", "EVENT_WOW_PLAYER_ALIVE" )
@@ -49,9 +53,18 @@ function ArkInventorySearch_Stockpile.SearchModule:OnEnable( )
 end
 
 function ArkInventorySearch_Stockpile.SearchModule:OnDisable( )
-	ArkInventory.Search.Frame_Hide( )
-	table.wipe( ArkInventory.Search.SourceTable )
-	table.wipe( ArkInventorySearch_Stockpile.SearchModule.cache )
+	if StockpileFrame then
+		StockpileFrame:Hide( )
+	end
+	
+	if ArkInventory.Search and ArkInventorySearch_Stockpile.OldSearchFrame then
+		ArkInventory.Search.frame = ArkInventorySearch_Stockpile.OldSearchFrame
+	end
+	
+	table.wipe( ArkInventorySearch_Stockpile.GlobalSearchCache )
+	table.wipe( ArkInventorySearch_Stockpile.GlobalSearchCacheIndexLookup )
+	table.wipe( ArkInventorySearch_Stockpile.ItemLoadingPool )
+	table.wipe( ArkInventorySearch_Stockpile.SearchResultsTable )
 	
 	ArkInventorySearch_Stockpile:UnhookAll( )
 	
@@ -60,45 +73,6 @@ function ArkInventorySearch_Stockpile.SearchModule:OnDisable( )
 	ArkInventorySearch_Stockpile:UnregisterMessage( "EVENT_ARKINV_BUILD_GLOBAL_CACHE" )
 	ArkInventorySearch_Stockpile.UnregisterSearchCacheEvents( )
 	ArkInventorySearch_Stockpile:UnregisterAllBuckets( )
-	
-	table.wipe( ArkInventorySearch_Stockpile.GlobalSearchCache )
-	table.wipe( ArkInventorySearch_Stockpile.GlobalSearchCacheIndexLookup )
-	
-	ArkInventory:EnableModule( "ArkInventorySearch" )
-end
-
-function ArkInventorySearch_Stockpile.Frame_Table_Refresh( frame )
-	local f
-	if not frame then
-		frame = ARKINV_Search_StockpileFrameViewSearchFilter
-	end
-	f = frame:GetParent( ):GetParent( ):GetParent( ):GetName( )
-	f = string.format( "%s%s", f, "View" )
-
-	ArkInventory.Search.Frame_Table_Reset( f )
-	
-	local filter = _G[string.format( "%s%s", f, "SearchFilter" )]:GetText( )
-	filter = ArkInventory.Search.CleanText( filter )
-	
-	local newSearchTable = { }
-	local c = 0
-	if ArkInventorySearch_Stockpile.GlobalSearchCache then
-		for id, itemData in pairs(ArkInventorySearch_Stockpile.GlobalSearchCache) do
-			if string.find( itemData.search_text, filter, nil, true ) or filter == "" then
-				c = c + 1
-				newSearchTable[c] = itemData
-			end
-			
-		end
-		
-	end
-	ArkInventory.Search.SourceTable = newSearchTable
-	
-	if #ArkInventory.Search.SourceTable > 0 then
-		table.sort( ArkInventory.Search.SourceTable, function( a, b ) return a.sorted < b.sorted end )
-		ArkInventory.Search.Frame_Table_Scroll( frame )
-	end
-
 end
 
 function ArkInventorySearch_Stockpile.GetInventorySlotName(itemEquipLoc)
@@ -197,17 +171,6 @@ function ArkInventorySearch_Stockpile.QueryStockpileCacheItems( text, filterData
 						
 						level_match = level_match_min and level_match_max
 						
-						if itemData.ilvl and itemData.uselevel and itemData.name == "Husk of Naraxis" then
-							print("ilvl: " .. itemData.ilvl)
-							print("uselevel: " .. itemData.uselevel)
-							print("minLevel: " .. minLevel)
-							print("maxLevel: " .. maxLevel)
-							print("min: " .. tostring(level_match_min))
-							print("max: " .. tostring(level_match_max))
-							print("< " .. tostring((itemData.uselevel < minLevel)))
-						end
-						
-						
 						if level_match then
 						
 							if filterData then
@@ -274,11 +237,8 @@ function ArkInventorySearch_Stockpile.QueryStockpileCacheItems( text, filterData
 			end
 		end
 	end
-	ArkInventory.Search.SourceTable = newSearchTable
+	ArkInventorySearch_Stockpile.SearchResultsTable = newSearchTable
 	ArkInventorySearch_Stockpile:SendMessage( "EVENT_STOCKPILE_CACHE_ITEM_LIST_UPDATE")
-	-- if #ArkInventory.Search.SourceTable > 0 then
-		-- table.sort( ArkInventory.Search.SourceTable, function( a, b ) return a.sorted < b.sorted end )
-	-- end
 end
 
 function table.val_to_str ( v )

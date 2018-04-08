@@ -199,13 +199,13 @@ function ArkInventorySearch_Stockpile.ValidateItemInfo( info, sd, player_id, loc
 	end
 	
 	-- handles invalid ilvl and uselevel
-	if info.class == "item" and info.ilvl == -1 then
+	if info.class == "item" and info.ilvl == -2 then
 		info.isValid = false
 		table.insert(info.invalidReasons, "missing_ilvl")
 		return info
 	end
 	
-	if info.class == "item" and info.uselevel == -1 then
+	if info.class == "item" and info.uselevel == -2 then
 		info.isValid = false
 		table.insert(info.invalidReasons, "missing_uselevel")
 		return info

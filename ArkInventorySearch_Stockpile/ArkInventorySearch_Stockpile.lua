@@ -106,35 +106,6 @@ function ArkInventorySearch_Stockpile.ConfigBlizzard( )
 end
 
 
--- DEPENDENCIES ------------------------------------------------------------------------------
---
--- Listed here are references called from original ArkInventory addon, just for documentation
--- These are functions we would need to keep an eye on for changes that may affect
--- ArkInventorySearch_Stockpile (e.g. if the return value changes, or the function name changes)
---
--- ArkInventory.BlizzardBagIdToInternalId( blizzard_id )
--- ArkInventory.Collection.Pet.ScanSpecies( info.id )
--- ArkInventory.Const.Location.Heirloom
--- ArkInventory.Const.Location.Mail
--- ArkInventory.Const.Location.Mount
--- ArkInventory.Const.Location.Pet
--- ArkInventory.Const.Location.Toybox
--- ArkInventory.Const.Location.Vault
--- ArkInventory.db.player.data[player_id]
--- ArkInventory.Global.Cache.SentMail
--- ArkInventory.Global.Cache.SentMail.age
--- ArkInventory.Global.Cache.SentMail.from
--- ArkInventory.Global.Cache.SentMail.to
--- ArkInventory.LocationIsMonitored( loc_id )
--- ArkInventory.ObjectInfoArray( sd.h )
--- ArkInventory.PlayerIDSelf( )
--- ArkInventory.PlayerIDAccount( )
--- ArkInventory.ScanMailSentData( )
--- ArkInventory.Search.Frame_Table_Refresh( )
--- ArkInventory.spairs( ArkInventory.db.player.data )
--- ArkInventory.TimeAsMinutes( )
-
-
 
 -- DIRECT OVERRIDES --------------------------------------------------------------------------
 --
