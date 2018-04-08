@@ -40,7 +40,7 @@ ArkInventorySearch_Stockpile:SetDefaultModuleState(false)
 -- ArkInventorySearch_Stockpile.GlobalSearchCache
 -- holds all cached items for search
 -- Each entry contains:
--- { id = object_id, sorted = object_info.name, name = object_info.name, h = object_info.h, q = object_info.q, t = object_info.texture, locationTable = location_table }
+-- { id = object_id, sorted = object_info.name, name = object_info.name, h = object_info.h, q = object_info.q, t = object_info.texture, location_table = location_table }
 -- location_table is a table of entries containing (player_id, location_id, bag_id) for every p,l,b that contains this item
 -- GlobalSearchCache is indexed by the objectid which has the format CLASS:ID, e.g. item:44571 so you can access item info
 -- for this object like so: GlobalSearchCache["item:44571"] which would return cached item info for Bottle of Silvermoon Port
@@ -54,11 +54,11 @@ ArkInventorySearch_Stockpile.IsBuilding = false
 -- used to recache a container by only updating cache entries found in the p,l,b lookup
 ArkInventorySearch_Stockpile.GlobalSearchCacheIndexLookup = { }
 
--- ArkInventorySearch_Stockpile.ItemLoadingQueue
+-- ArkInventorySearch_Stockpile.ItemLoadingPool
 -- holds items that were missing info after a call to ArkInventorySearch_Stockpile.ObjectInfoArray
 -- When a GET_ITEM_INFO_RECEIVED event is fired if the triggering event is for an item
--- waiting in the ItemLoadingQueue than it will get that info and update the cache entry
-ArkInventorySearch_Stockpile.ItemLoadingQueue = { }
+-- waiting in the ItemLoadingPool than it will get that info and update the cache entry
+ArkInventorySearch_Stockpile.ItemLoadingPool = { }
 
 local cache_bag_bucket	-- variable to store bucket
 local cache_location_bucket	-- variable to store bucket
@@ -106,35 +106,6 @@ function ArkInventorySearch_Stockpile.ConfigBlizzard( )
 end
 
 
--- DEPENDENCIES ------------------------------------------------------------------------------
---
--- Listed here are references called from original ArkInventory addon, just for documentation
--- These are functions we would need to keep an eye on for changes that may affect
--- ArkInventorySearch_Stockpile (e.g. if the return value changes, or the function name changes)
---
--- ArkInventory.BlizzardBagIdToInternalId( blizzard_id )
--- ArkInventory.Collection.Pet.ScanSpecies( info.id )
--- ArkInventory.Const.Location.Heirloom
--- ArkInventory.Const.Location.Mail
--- ArkInventory.Const.Location.Mount
--- ArkInventory.Const.Location.Pet
--- ArkInventory.Const.Location.Toybox
--- ArkInventory.Const.Location.Vault
--- ArkInventory.db.player.data[player_id]
--- ArkInventory.Global.Cache.SentMail
--- ArkInventory.Global.Cache.SentMail.age
--- ArkInventory.Global.Cache.SentMail.from
--- ArkInventory.Global.Cache.SentMail.to
--- ArkInventory.LocationIsMonitored( loc_id )
--- ArkInventory.ObjectInfoArray( sd.h )
--- ArkInventory.PlayerIDSelf( )
--- ArkInventory.PlayerIDAccount( )
--- ArkInventory.ScanMailSentData( )
--- ArkInventory.Search.Frame_Table_Refresh( )
--- ArkInventory.spairs( ArkInventory.db.player.data )
--- ArkInventory.TimeAsMinutes( )
-
-
 
 -- DIRECT OVERRIDES --------------------------------------------------------------------------
 --
@@ -153,6 +124,67 @@ end
 -- They will not modify the original function but just do something else after the original
 -- function has finished (e.g. letting ArkInventorySearch_Stockpile know some update happened)
 --
+
+-- Called after an auction bid, post-hook is after default function,
+-- If the bid was a buyout grab the item info and store as sent mail
+-- then trigger a mail cache update
+function ArkInventorySearch_Stockpile.HookPlaceAuctionBid( auction_type, index, bid )
+	
+	if not ArkInventory:IsEnabled( ) then return end
+	
+	local loc_id = ArkInventory.Const.Location.Mail
+	
+	if not ArkInventory.LocationIsMonitored( loc_id ) then return end
+	
+	table.wipe( ArkInventory.Global.Cache.SentMail )
+	
+	local player_id = ArkInventory.PlayerIDSelf( )
+	
+	local name, texture, count, _, _, _, _, _, _, buyoutPrice = GetAuctionItemInfo( auction_type, index )
+	
+	if bid >= buyoutPrice then
+		ArkInventory.Global.Cache.SentMail.to = player_id
+		ArkInventory.Global.Cache.SentMail.from = "Auction House"
+		ArkInventory.Global.Cache.SentMail.age = ArkInventory.TimeAsMinutes( )
+		
+		if name then
+			ArkInventory.Global.Cache.SentMail[1] = { n = name, c = count, h = GetAuctionItemLink( auction_type, index ) }
+		end
+		
+		ArkInventory.ScanMailSentData( )
+		ArkInventorySearch_Stockpile:SendMessage( "EVENT_ARKINV_SEARCH_CACHE_MAIL_SENT_UPDATE" )
+	end
+	
+end
+
+-- Called when an auction is cancelled.  Pre-hook before normal function
+-- grabs the item info and stores it as a sent mail then trigger
+-- a mail cache update
+function ArkInventorySearch_Stockpile.HookCancelAuction( index )
+	
+	if not ArkInventory:IsEnabled( ) then return end
+	
+	local loc_id = ArkInventory.Const.Location.Mail
+	
+	if not ArkInventory.LocationIsMonitored( loc_id ) then return end
+	
+	table.wipe( ArkInventory.Global.Cache.SentMail )
+	
+	local player_id = ArkInventory.PlayerIDSelf( )
+	
+	-- known character, store sent mail data
+	ArkInventory.Global.Cache.SentMail.to = player_id
+	ArkInventory.Global.Cache.SentMail.from = "Auction House"
+	ArkInventory.Global.Cache.SentMail.age = ArkInventory.TimeAsMinutes( )
+	
+	local name, texture, count = GetAuctionItemInfo( "owner", index )
+	if name then
+		ArkInventory.Global.Cache.SentMail[1] = { n = name, c = count, h = GetAuctionItemLink( "owner", index ) }
+	end
+	
+	ArkInventory.ScanMailSentData( )
+	ArkInventorySearch_Stockpile:SendMessage( "EVENT_ARKINV_SEARCH_CACHE_MAIL_SENT_UPDATE" )
+end
 
 -- STORAGE -----------------------------------------------------------------------------------
 

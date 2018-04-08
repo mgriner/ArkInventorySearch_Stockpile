@@ -9,9 +9,13 @@
 
 ## DefaultState: Enabled
 ## LoadOnDemand: 0
-## RequiredDeps: ArkInventory, ArkInventorySearch
+## RequiredDeps: ArkInventory
 
 ArkInventorySearch_Stockpile.lua
 ArkInventorySearch_Stockpile_SearchModule.lua
 ArkInventorySearch_Stockpile_Cache.lua
-ArkInventorySearch_Stockpile.xml
+ArkInventorySearch_Stockpile_ItemInfo.lua
+ArkInventorySearch_Stockpile_Utility.lua
+Auction_UI\Stockpile_AuctionData.lua
+Auction_UI\Stockpile_AuctionUI.xml
+Auction_UI\Localization.lua

@@ -1,0 +1,536 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\..\FrameXML\UI.xsd">
+	<Button name="StockpileClassButtonTemplate" parentArray="StockpileFilterButtons" virtual="true">
+		<Size>
+			<AbsDimension x="136" y="20"/>
+		</Size>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parentLines" file="Interface\AuctionFrame\UI-AuctionFrame-FilterLines">
+					<Size>
+						<AbsDimension x="7" y="20"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT">
+							<Offset>
+								<AbsDimension x="13" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+					<TexCoords left="0" right="0.4375" top="0" bottom="0.625"/>
+				</Texture>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnClick>
+				ArkInventorySearch_Stockpile.StockpileFrameFilter_OnClick(self, button, down);
+			</OnClick>
+		</Scripts>
+		<NormalTexture name="$parentNormalTexture" file="Interface\AuctionFrame\UI-AuctionFrame-FilterBg">
+			<TexCoords left="0" right="0.53125" top="0" bottom="0.625"/>
+		</NormalTexture>
+		<HighlightTexture file="Interface\PaperDollInfoFrame\UI-Character-Tab-Highlight" alphaMode="ADD"/>
+		<ButtonText name="$parentNormalText">
+			<Size>
+				<AbsDimension x="125" y="8"/>
+			</Size>
+			<Anchors>
+				<Anchor point="LEFT">
+					<Offset>
+						<AbsDimension x="4" y="0"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+		</ButtonText>
+		<NormalFont style="GameFontNormalSmallLeft"/>
+		<HighlightFont style="GameFontHighlightSmallLeft"/>
+	</Button>
+	<Button name="StockpileSortButtonTemplate" virtual="true">
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parentLeft" file="Interface\FriendsFrame\WhoFrame-ColumnTabs">
+					<Size>
+						<AbsDimension x="5" y="19"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT"/>
+					</Anchors>
+					<TexCoords left="0" right="0.078125" top="0" bottom="0.59375"/>
+				</Texture>
+				<Texture name="$parentRight" file="Interface\FriendsFrame\WhoFrame-ColumnTabs">
+					<Size>
+						<AbsDimension x="4" y="19"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPRIGHT"/>
+					</Anchors>
+					<TexCoords left="0.90625" right="0.96875" top="0" bottom="0.59375"/>
+				</Texture>
+				<Texture name="$parentMiddle" file="Interface\FriendsFrame\WhoFrame-ColumnTabs">
+					<Size>
+						<AbsDimension x="10" y="19"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parentLeft" relativePoint="RIGHT"/>
+						<Anchor point="RIGHT" relativeTo="$parentRight" relativePoint="LEFT"/>
+					</Anchors>
+					<TexCoords left="0.078125" right="0.90625" top="0" bottom="0.59375"/>
+				</Texture>
+			</Layer>
+		</Layers>
+		<ButtonText name="$parentText">
+			<Anchors>
+				<Anchor point="LEFT">
+					<Offset>
+						<AbsDimension x="8" y="0"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+		</ButtonText>
+		<NormalFont style="GameFontHighlightSmall"/>
+		<NormalTexture name="$parentArrow" file="Interface\Buttons\UI-SortArrow" parentKey="Arrow">
+			<Size>
+				<AbsDimension x="9" y="8"/>
+			</Size>
+			<Anchors>
+				<Anchor point="LEFT" relativeTo="$parentText" relativePoint="RIGHT">
+					<Offset>
+						<AbsDimension x="3" y="-2"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<TexCoords left="0" right="0.5625" top="0" bottom="1.0"/>
+		</NormalTexture>
+		<HighlightTexture file="Interface\PaperDollInfoFrame\UI-Character-Tab-Highlight" alphaMode="ADD">
+			<Size>
+				<AbsDimension x="5" y="24"/>
+			</Size>
+			<Anchors>
+				<Anchor point="LEFT">
+					<Offset>
+						<AbsDimension x="0" y="0"/>
+					</Offset>
+				</Anchor>
+				<Anchor point="RIGHT">
+					<Offset>
+						<AbsDimension x="4" y="0"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+		</HighlightTexture>
+	</Button>
+	<Button name="StockpileBrowseButtonTemplate" hidden="false" virtual="true">
+		<Size>
+			<AbsDimension x="597" y="37"/>
+		</Size>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<FontString name="$parentName" inherits="GameFontNormal" justifyH="LEFT">
+					<Size>
+						<AbsDimension x="158" y="32"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset>
+								<AbsDimension x="43" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentLevel" inherits="GameFontHighlightSmall">
+					<Size>
+						<AbsDimension x="35" y="32"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset>
+								<AbsDimension x="284" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<Texture name="$parentLeft" file="Interface\AuctionFrame\UI-AuctionItemNameFrame">
+					<Size>
+						<AbsDimension x="10" y="32"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT">
+							<Offset>
+								<AbsDimension x="34" y="2"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+					<TexCoords left="0" right="0.078125" top="0" bottom="1.0"/>
+				</Texture>
+				<Texture name="$parentRight" file="Interface\AuctionFrame\UI-AuctionItemNameFrame">
+					<Size>
+						<AbsDimension x="10" y="32"/>
+					</Size>
+					<Anchors>
+						<Anchor point="RIGHT">
+							<Offset>
+								<AbsDimension x="0" y="2"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+					<TexCoords left="0.75" right="0.828125" top="0" bottom="1.0"/>
+				</Texture>
+				<Texture file="Interface\AuctionFrame\UI-AuctionItemNameFrame">
+					<Size>
+						<AbsDimension x="10" y="32"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parentLeft" relativePoint="RIGHT">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+						<Anchor point="RIGHT" relativeTo="$parentRight" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+					<TexCoords left="0.078125" right="0.75" top="0" bottom="1.0"/>
+				</Texture>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Button name="$parentItem">
+				<Size>
+					<AbsDimension x="32" y="32"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="0" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="BORDER">
+						<Texture name="$parentIconTexture"/>
+						<FontString name="$parentCount" inherits="NumberFontNormal" justifyH="RIGHT" hidden="true">
+							<Anchors>
+								<Anchor point="BOTTOMRIGHT">
+									<Offset>
+										<AbsDimension x="-5" y="2"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+					<Layer level="OVERLAY">
+						<Texture parentKey="IconBorder" file="Interface\Common\WhiteIconFrame" hidden="true">
+							<Size x="32" y="32"/>
+							<Anchors>
+								<Anchor point="CENTER"/>
+							</Anchors>
+						</Texture>
+					</Layer>
+					<Layer level="OVERLAY" textureSubLevel="1">
+						<Texture parentKey="IconOverlay" hidden="true">
+							<Size x="32" y="32"/>
+							<Anchors>
+								<Anchor point="CENTER"/>
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnEnter>
+						self:GetParent():LockHighlight();
+						ArkInventorySearch_Stockpile.StockpileFrameItem_OnEnter(self, "list", self:GetParent():GetID() + FauxScrollFrame_GetOffset(StockpileBrowseScrollFrame));
+					</OnEnter>
+					<OnLeave>
+						ArkInventorySearch_Stockpile.StockpileBrowseFrame_CheckUnlockHighlight(self, "list", FauxScrollFrame_GetOffset(StockpileBrowseScrollFrame));
+						GameTooltip_Hide();
+						ResetCursor();
+					</OnLeave>
+					<OnClick>
+						if ( IsModifiedClick() ) then
+							if ( not HandleModifiedItemClick(ArkInventorySearch_Stockpile.GetSearchTableItemLink(self:GetParent():GetID() + FauxScrollFrame_GetOffset(StockpileBrowseScrollFrame))) ) then
+								if ( IsModifiedClick("DRESSUP") ) then
+									ArkInventorySearch_Stockpile.DressUpBattlePetLink(ArkInventorySearch_Stockpile.GetSearchTableItemLink(self:GetParent():GetID() + FauxScrollFrame_GetOffset(StockpileBrowseScrollFrame)));
+								end
+							end
+						else
+							ArkInventorySearch_Stockpile.StockpileBrowseButton_OnClick(self:GetParent());
+						end
+					</OnClick>
+					<OnUpdate>
+						if ( GameTooltip:IsOwned(self) ) then
+							ArkInventorySearch_Stockpile.StockpileFrameItem_OnEnter(self, "list", self:GetParent():GetID() + FauxScrollFrame_GetOffset(StockpileBrowseScrollFrame));
+						end
+					</OnUpdate>
+				</Scripts>
+				<NormalTexture name="$parentNormalTexture" file="Interface\Buttons\UI-Quickslot2">
+					<Size>
+						<AbsDimension x="60" y="60"/>
+					</Size>
+					<Anchors>
+						<Anchor point="CENTER">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</NormalTexture>
+				<PushedTexture file="Interface\Buttons\UI-Quickslot-Depress"/>
+				<HighlightTexture file="Interface\Buttons\ButtonHilight-Square" alphaMode="ADD"/>
+			</Button>
+			
+			
+			
+			<Button name="$parentNameTest">
+					<Size>
+						<AbsDimension x="158" y="32"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset>
+								<AbsDimension x="43" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+					<Layers>
+						<Layer level="BACKGROUND">
+							<Texture>
+								<Size x="162" y="32" />
+								<Color a="0.25" r="0" g="1" b="0" />
+							</Texture>
+						</Layer>
+					</Layers>
+			</Button>
+			
+			
+			<Button name="$parentLevelTest">
+				<Size>
+					<AbsDimension x="35" y="32"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="284" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND">
+						<Texture>
+							<Size x="54" y="32" />
+							<Color a="0.25" r="0" g="0" b="1" />
+						</Texture>
+					</Layer>
+				</Layers>
+			</Button>
+				
+				
+			
+			<Button name="$parentLeftTest">
+				<Size>
+					<AbsDimension x="10" y="32"/>
+				</Size>
+				<Anchors>
+					<Anchor point="LEFT">
+						<Offset>
+							<AbsDimension x="34" y="2"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND">
+						<Texture>
+							<Size x="10" y="32" />
+							<Color a="0.25" r="0" g="0.5" b="0.3" />
+						</Texture>
+					</Layer>
+				</Layers>
+			</Button>
+			<Button name="$parentRightTest">
+				<Size>
+					<AbsDimension x="10" y="32"/>
+				</Size>
+				<Anchors>
+					<Anchor point="RIGHT">
+						<Offset>
+							<AbsDimension x="0" y="2"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND">
+						<Texture>
+							<Size x="10" y="32" />
+							<Color a="0.25" r="0" g="0.5" b="0.3" />
+						</Texture>
+					</Layer>
+				</Layers>
+			</Button>
+			
+			
+			
+			
+			
+			<Frame name="$parentItemRarityColumn" enableMouse="true">
+				<Size>
+					<AbsDimension x="72" y="32"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="207" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND">
+						<Texture>
+							<Color a="0.5" r="0.2" g="0.2" b="0" />
+						</Texture>
+						<FontString name="$parentText" inherits="GameFontHighlightSmall">
+							<Size>
+								<AbsDimension x="72" y="32"/>
+							</Size>
+							<Anchors>
+								<Anchor point="TOPLEFT"/>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnEnter>
+						self:GetParent():LockHighlight();
+						GameTooltip:SetOwner(self);
+						GameTooltip:SetText(self.tooltip);
+					</OnEnter>
+					<OnLeave>
+						ArkInventorySearch_Stockpile.StockpileBrowseFrame_CheckUnlockHighlight(self, "list", FauxScrollFrame_GetOffset(StockpileBrowseScrollFrame));
+						GameTooltip:Hide();
+					</OnLeave>
+				</Scripts>
+			</Frame>
+			
+			
+				
+				
+			
+			<Frame name="$parentItemLevelColumn" enableMouse="true">
+				<Size>
+					<AbsDimension x="35" y="32"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="319" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND">
+						<Texture>
+							<Color a="0.5" r="0.7" g="0.1" b="0.1" />
+						</Texture>
+						<FontString name="$parentText" inherits="GameFontHighlightSmall">
+							<Size>
+								<AbsDimension x="35" y="32"/>
+							</Size>
+							<Anchors>
+								<Anchor point="TOPLEFT"/>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnEnter>
+						self:GetParent():LockHighlight();
+						GameTooltip:SetOwner(self);
+						GameTooltip:SetText(self.tooltip);
+					</OnEnter>
+					<OnLeave>
+						ArkInventorySearch_Stockpile.StockpileBrowseFrame_CheckUnlockHighlight(self, "list", FauxScrollFrame_GetOffset(StockpileBrowseScrollFrame));
+						GameTooltip:Hide();
+					</OnLeave>
+				</Scripts>
+			</Frame>
+			<Frame name="$parentItemTypeColumn">
+				<Size x="102" y="32"/>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="360" y="0"/>
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND">
+						<FontString name="$parentName" parentKey="Name" inherits="GameFontHighlightSmall" setAllPoints="true"/>
+						<Texture>
+							<Color a="0.5" r="0.25" g="0.4" b="0.1" />
+						</Texture>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnEnter>
+						if (self.fullName) then
+							GameTooltip:SetOwner(self);
+							GameTooltip:SetText(self.fullName);
+						end
+					</OnEnter>
+					<OnLeave function="GameTooltip_Hide"/>
+				</Scripts>
+			</Frame>
+			<Frame name="$parentItemSubtypeColumn">
+				<Size x="132" y="32"/>
+				<Anchors>
+					<Anchor point="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="-10" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND">
+						<FontString name="$parentName" parentKey="Name" inherits="GameFontHighlightSmall" setAllPoints="true"/>
+						<Texture>
+							<Color a="0.5" r="0.25" g="0.1" b="0.3" />
+						</Texture>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnLoad>
+					</OnLoad>
+				</Scripts>
+			</Frame>
+		</Frames>
+		<Scripts>
+			<OnClick>
+				if ( IsModifiedClick() ) then
+					if ( not HandleModifiedItemClick(ArkInventorySearch_Stockpile.GetSearchTableItemLink(self:GetID() + FauxScrollFrame_GetOffset(StockpileBrowseScrollFrame))) ) then
+						if ( IsModifiedClick("DRESSUP") ) then
+							ArkInventorySearch_Stockpile.DressUpBattlePetLink(ArkInventorySearch_Stockpile.GetSearchTableItemLink(self:GetParent():GetID() + FauxScrollFrame_GetOffset(StockpileBrowseScrollFrame)));
+						end
+					end
+				else
+					ArkInventorySearch_Stockpile.StockpileBrowseButton_OnClick(self);
+				end
+			</OnClick>
+		</Scripts>
+		<HighlightTexture name="$parentHighlight" file="Interface\HelpFrame\HelpFrameButton-Highlight" alphaMode="ADD">
+			<Size>
+				<AbsDimension x="523" y="32"/>
+			</Size>
+			<Anchors>
+				<Anchor point="TOPLEFT">
+					<Offset>
+						<AbsDimension x="33" y="0"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<TexCoords left="0" right="1.0" top="0" bottom="0.578125"/>
+		</HighlightTexture>
+	</Button>
+	<Button name="AuctionTabTemplate" inherits="CharacterFrameTabButtonTemplate" virtual="true">
+		<Scripts>
+			<OnClick>
+				ArkInventorySearch_Stockpile.StockpileFrameTab_OnClick(self, button, down);
+			</OnClick>
+		</Scripts>
+	</Button>
+</Ui>

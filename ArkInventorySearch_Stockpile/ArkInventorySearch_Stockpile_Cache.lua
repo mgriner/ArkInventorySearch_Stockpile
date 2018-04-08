@@ -74,12 +74,29 @@ end
 function ArkInventorySearch_Stockpile:EVENT_WOW_GET_ITEM_INFO_RECEIVED( event, ... )
 	local item_id = ...
 	local objectid = string.format( "%s:%s", "item", item_id )
-
+	-- print(item_id)
+	-- if item_id == 102248 or item_id == 127829 then
+		-- print("got info for: " .. objectid)
+	-- end
 	-- only pass to bucket if it's in the loading queue
-	if ArkInventorySearch_Stockpile.ItemLoadingQueue[objectid] ~= nil then
+	if ArkInventorySearch_Stockpile.ItemLoadingPool[objectid] ~= nil then
+		
+		local h = ArkInventorySearch_Stockpile.ItemLoadingPool[objectid].h
+		
 		-- grab the item info now, it probably won't be available when the bucket triggers
-		local name, h, q, _, _, _, _, _, _, texture = GetItemInfo( objectid )
-		ArkInventorySearch_Stockpile:SendMessage( "EVENT_ARKINV_GET_ITEM_INFO_RECEIVED_BUCKET", { objectid = objectid, name = name, h = h, q = q, texture = texture } )
+		local info = ArkInventory.ObjectInfoArray( h )
+		
+		-- pull the p,l,b data before we clear entry from queue
+		info.player_id = ArkInventorySearch_Stockpile.ItemLoadingPool[objectid].location_object.player_id
+		info.location_id = ArkInventorySearch_Stockpile.ItemLoadingPool[objectid].location_object.location_id
+		info.bag_id = ArkInventorySearch_Stockpile.ItemLoadingPool[objectid].location_object.bag_id
+		
+		-- clear entry from queue
+		ArkInventorySearch_Stockpile.ItemLoadingPool[objectid] = nil
+		
+		--local name, h, q, _, _, itemtype, _, _, _, texture = GetItemInfo( objectid )
+		--ArkInventorySearch_Stockpile:SendMessage( "EVENT_ARKINV_GET_ITEM_INFO_RECEIVED_BUCKET", { objectid = objectid, name = name, h = h, q = q, texture = texture, itemtype = itemtype } )
+		ArkInventorySearch_Stockpile:SendMessage( "EVENT_ARKINV_GET_ITEM_INFO_RECEIVED_BUCKET", info )
 	end
 end
 
@@ -88,50 +105,65 @@ end
 -- INPUT (table) ... : should contain a table of item_info objects which have an
 -- objectid, name, h, q, and texture
 function ArkInventorySearch_Stockpile:EVENT_ARKINV_GET_ITEM_INFO_RECEIVED_BUCKET( ... )
-
+	
 	local item_info_table = ...
 	local item_cache_table = { }
 	local sd = { }
 	local player_id, location_id, bag_id
 	
 	for info in pairs( item_info_table ) do
-		if ArkInventorySearch_Stockpile.ItemLoadingQueue[info.objectid] ~= nil then
+		player_id = info.player_id
+		location_id = info.location_id
+		bag_id = info.bag_id
 		
-			-- pull the p,l,b data before we clear entry from queue
-			player_id = ArkInventorySearch_Stockpile.ItemLoadingQueue[info.objectid].player_id
-			location_id = ArkInventorySearch_Stockpile.ItemLoadingQueue[info.objectid].location_id
-			bag_id = ArkInventorySearch_Stockpile.ItemLoadingQueue[info.objectid].bag_id
-			
-			-- clear entry from queue
-			ArkInventorySearch_Stockpile.ItemLoadingQueue[info.objectid] = nil
-			
-			-- if the item already exists in cache grab its info
-			-- for comparison in validation function
-			if ArkInventorySearch_Stockpile.GlobalSearchCache[info.objectid] then
-				sd = { h = ArkInventorySearch_Stockpile.GlobalSearchCache[info.objectid].h, q = ArkInventorySearch_Stockpile.GlobalSearchCache[info.objectid].q }
-			else
-				sd = { h = info.h, q = info.q }
-			end
-			
-			-- try to validate info
-			info = ArkInventorySearch_Stockpile.ValidateItemInfo( info, sd )
+		-- if the item already exists in cache grab its info
+		-- for comparison in validation function
+		if ArkInventorySearch_Stockpile.GlobalSearchCache[info.objectid] then
+			sd = { h = ArkInventorySearch_Stockpile.GlobalSearchCache[info.objectid].h, q = ArkInventorySearch_Stockpile.GlobalSearchCache[info.objectid].q }
+		else
+			sd = { h = info.h, q = info.q }
+		end
+		
+		-- try to validate info
+		info = ArkInventorySearch_Stockpile.ValidateItemInfo( info, sd, player_id, location_id, bag_id )
 
-			-- if not valid add it back to the queue
-			-- otherwise update/add the cache entry to local table
-			if info.addToLoadingQueue then
-				ArkInventorySearch_Stockpile.ItemLoadingQueue[info.objectid] = { h = info.h, q = info.q, player_id = player_id, location_id = location_id, bag_id = bag_id }
-			elseif not item_cache_table[info.objectid] then
-				item_cache_table[info.objectid] = { name = info.name, h = info.h, q = info.q, texture = info.texture, player_id = player_id, location_id = location_id, bag_id = bag_id, search_text = info.search_text }
-			end
+		-- if not valid add it back to the queue
+		-- otherwise update/add the cache entry to local table
+		if info.class == "item" and not info.isValid then
+			ArkInventorySearch_Stockpile.ItemLoadingPool[info.objectid] = info
+		elseif not item_cache_table[info.objectid] then
+			item_cache_table[info.objectid] = info
 		end
 	end
 	-- batch add this local update table to the global cache table
 	ArkInventorySearch_Stockpile.AddItemsToSearchCache( item_cache_table )
+	ArkInventorySearch_Stockpile.CleanUpLoadingQueue( )
 end
 
 
 -- UTILITY FUNCTIONS ----------------------------------------------
 
+function ArkInventorySearch_Stockpile.CleanUpLoadingQueue( )
+	local item_cache_table = { }
+	local info
+	for objectid, objectinfo in pairs( ArkInventorySearch_Stockpile.ItemLoadingPool ) do
+		
+		-- clear from queue
+		ArkInventorySearch_Stockpile.ItemLoadingPool[objectid] = nil
+			
+		info = ArkInventory.ObjectInfoArray( objectinfo.h )
+					
+		info = ArkInventorySearch_Stockpile.ValidateItemInfo( info, info, objectinfo.location_object.player_id, objectinfo.location_object.location_id, objectinfo.location_object.bag_id )
+
+		-- if item is not ready back into the queue, otherwise into the cache
+		if info.class == "item" and not info.isValid then
+			ArkInventorySearch_Stockpile.ItemLoadingPool[info.objectid] = info
+		elseif not item_cache_table[info.objectid] then
+			item_cache_table[info.objectid] = info
+		end
+	end
+	ArkInventorySearch_Stockpile.AddItemsToSearchCache( item_cache_table )
+end
 
 -- Registers events needed for cache
 function ArkInventorySearch_Stockpile.RegisterSearchCacheEvents( )
@@ -148,6 +180,7 @@ function ArkInventorySearch_Stockpile.RegisterSearchCacheEvents( )
 	end
 	
 	ArkInventorySearch_Stockpile:RegisterMessage( "EVENT_ARKINV_SEARCH_CACHE_MAIL_SENT_UPDATE" )
+
 end
 
 -- Unregisters events needed for cache
@@ -171,142 +204,46 @@ function ArkInventorySearch_Stockpile.UnregisterSearchCacheEvents( )
 	ArkInventorySearch_Stockpile:UnregisterMessage( "EVENT_ARKINV_SEARCH_CACHE_MAIL_SENT_UPDATE" )
 end
 
--- Inserts a location object into a location table
--- INPUT (table) location_table: location table where location object will be inserted
---                       may contain existing location objects
--- INPUT (table) location_object: object consisting of player_id, location_id, bag_id
--- RETURNS (table) the new location_table with the object inserted
-function ArkInventorySearch_Stockpile.InsertLocationObject( location_table, location_object )
-	if next( location_table ) ~= nil then
-	
-		for k,v in pairs( location_table ) do
-			-- if the p,l,b pair already exists in table do nothing
-			if v.player_id == location_object.player_id and v.location_id == location_object.location_id and v.bag_id == location_object.bag_id then
-				return location_table
-			end
-		end
-		
-	end
-	
-	-- add the location object to table
-	table.insert( location_table, location_object )
-	return location_table
-	
-end
-
--- Gets the player_id based on the location
--- By default returns logged in player but may return guild_id or Account
--- depending on location
--- INPUT (int) location_id
--- RETURNS (string) the player_id that should be used for the location given
-function ArkInventorySearch_Stockpile.PlayerIDLocation( location_id )
-	local player_id = ArkInventory.PlayerIDSelf( )
-	local player_data = ArkInventory.db.player.data[player_id]
-	
-	if location_id == ArkInventory.Const.Location.Vault then
-		player_id = player_data.info.guild_id or player_id
-	elseif location_id == ArkInventory.Const.Location.Pet or location_id == ArkInventory.Const.Location.Mount or location_id == ArkInventory.Const.Location.Toybox or location_id == ArkInventory.Const.Location.Heirloom then
-		player_id = ArkInventory.PlayerIDAccount( )
-	end
-	
-	return player_id
-end
-
--- Helper function to make sure all the info fields we need from GetItemInfo and GetObjectInfoArray
--- are populated with some default value or reloaded from Blizzard servers
--- INPUT (table) info : info object, fields may vary but it should have class, name, id, h, q
--- RETURNS (table) info : info object with all fields needed or flagged for reload
-function ArkInventorySearch_Stockpile.ValidateItemInfo( info, sd )
-	info.addToLoadingQueue = false
-	
-	-- if it is an item and it is missing name info we need to reload data
-	if info.class == "item" and ( info.name == nil or info.name == "!---LOADING---!" or info.name == "" ) then
-		info.name = info.name or "!---LOADING---!"
-		info.addToLoadingQueue = true
-	end
-	
-	if info.class == "battlepet" and info.sd == nil then
-		info.sd = ArkInventory.Collection.Pet.ScanSpecies( info.id )
-		if info.sd then
-			info.name = info.sd.name or info.name
-			info.texture = info.sd.icon or info.texture
-			info.ilvl = info.sd.level or info.ilvl
-			info.itemsubtypeid = info.sd.petType or info.itemsubtypeid
-		end
-	end
-	
-	if info.name == nil or info.name == "" then
-		info.name = "!---LOADING---!"
-	end
-	
-	-- if info.objectid is not populated yet try to do so
-	-- may already populated from previous call to ValidateItemInfo
-	-- e.g. items already stored in loading queue
-	if not info.objectid then
-		if not info.class or not info.id then
-			info.class = info.class or "unknown"
-			info.id = info.id or "unknown"
-		end
-		
-		info.objectid = string.format( "%s:%s", info.class, info.id )
-	end
-	
-	-- if sd.h and info.h are both empty then we are missing some info
-	-- set a default empty value and add to loading queue
-	if ( sd.h == nil or sd.h == "[]" ) and ( info.h == nil or info.h == "[]" ) then
-		info.h = ( "|cff9d9d9d|H" .. info.objectid .. "::::::::::::|h[".. info.name .. "]|h|r" )
-		info.addToLoadingQueue = true
-	-- otherwise, if info is empty but we have it cached we should still reload
-	elseif ( info.h == nil or info.h == "[]" ) and ( sd.h ~= nil and sd.h ~= "[]" ) then
-		info.addToLoadingQueue = true
-	end
-	
-	-- if qualities don't match and info returns 1
-	-- we most likely have the correct quality cached then, use sd
-	if  sd.q ~= info.q and info.q == 1 then
-		info.q = sd.q
-	end
-	
-	if not info.search_text then
-		info.search_text = ArkInventory.Search.GetContent( info.objectid )
-	end
-	
-	return info
-	
-end
-
 
 -- CACHE FUNCTIONS ----------------------------------------------
 
 
 -- Batch adds all info objects passed in as table to the global cache then refresh search table
 -- INPUT (table) object_info_table : a table containing item info to be added to global cache
---							 		 Each object should have name, h, q, texture, player_id, location_id, and bag_id
+--							 		 Each object should have name, h, q, texture, location_object
 function ArkInventorySearch_Stockpile.AddItemsToSearchCache( object_info_table )
-
+	local location_table
+	local cache_object
 	for object_id, object_info in pairs( object_info_table ) do
-		local location_object = { player_id = object_info.player_id, location_id = object_info.location_id, bag_id = object_info.bag_id }
-		local location_table = { }
+		location_table = { }
+		cache_object = { id = object_id, sorted = object_info.name, name = object_info.name, h = object_info.h, q = object_info.q, t = object_info.texture, search_text = object_info.search_text, itemtypeid = object_info.itemtypeid, itemsubtypeid = object_info.itemsubtypeid, itemtype = object_info.itemtype, itemsubtype = object_info.itemsubtype, class = object_info.class, equiploc = object_info.equiploc, ilvl = object_info.ilvl, uselevel = object_info.uselevel, canUse = object_info.canUse, tooltip_text = object_info.tooltip_text }
 		
-		-- if not already cached add it
+		-- if not already cached create a fresh location table
 		if not ArkInventorySearch_Stockpile.GlobalSearchCache[object_id] then
-			location_table = ArkInventorySearch_Stockpile.InsertLocationObject( location_table, location_object )
-			ArkInventorySearch_Stockpile.GlobalSearchCache[object_id] = { id = object_id, sorted = object_info.name, name = object_info.name, h = object_info.h, q = object_info.q, t = object_info.texture, locationTable = location_table, search_text = object_info.search_text }
+			location_table = ArkInventorySearch_Stockpile.InsertLocationObject( location_table, object_info.location_object )
 		-- else, if it is already cached make sure we copy any existing location data
 		else
-			location_table = ArkInventorySearch_Stockpile.GlobalSearchCache[object_id].locationTable
-			location_table = ArkInventorySearch_Stockpile.InsertLocationObject( location_table, location_object )
-			ArkInventorySearch_Stockpile.GlobalSearchCache[object_id] = { id = object_id, sorted = object_info.name, name = object_info.name, h = object_info.h, q = object_info.q, t = object_info.texture, locationTable = location_table, search_text = object_info.search_text }
+			location_table = ArkInventorySearch_Stockpile.GlobalSearchCache[object_id].location_table
+			location_table = ArkInventorySearch_Stockpile.InsertLocationObject( location_table, object_info.location_object )
 		end
+		
+		-- add location table to cache object
+		cache_object.location_table = location_table
+		
+		-- add or update the cache entry in global cache
+		ArkInventorySearch_Stockpile.GlobalSearchCache[object_id] = cache_object
 
 		-- Make sure we add a search cache index entry for reverse lookups
-		ArkInventorySearch_Stockpile.AddSearchCacheIndex( object_info.player_id, object_info.location_id, object_info.bag_id, object_id )
+		ArkInventorySearch_Stockpile.AddSearchCacheIndex( object_info.location_object.player_id, object_info.location_object.location_id, object_info.location_object.bag_id, object_id )
+		
+		-- Flag that the search cache has been updated
+		ArkInventorySearch_Stockpile.IsGlobalSearchCacheUpdated = true;
 		
 	end
 	
 	-- Make sure the UI exists, ignore table refresh if we are building the whole cache (performance)
-	if ARKINV_Search_Stockpile and not ArkInventorySearch_Stockpile.IsBuilding then
-		ArkInventorySearch_Stockpile.Frame_Table_Refresh( )
+	if StockpileFrame and not ArkInventorySearch_Stockpile.IsBuilding then
+		ArkInventorySearch_Stockpile.StockpileFrameBrowse_Search();
 	end
 	
 end
@@ -363,17 +300,17 @@ function ArkInventorySearch_Stockpile.Clear_Container( player_id, location_id, b
 			
 			info = ArkInventorySearch_Stockpile.GlobalSearchCache[object_id]
 			
-			if next( info ) ~= nil and next( info.locationTable ) ~= nil then
+			if next( info ) ~= nil and next( info.location_table ) ~= nil then
 				-- loop through all locations for this item, if it matches this p,l,b remove it
-				for index, location_object in pairs( info.locationTable ) do
+				for index, location_object in pairs( info.location_table ) do
 					if location_object.player_id == player_id and location_object.location_id == location_id and location_object.bag_id == bag_id then
-						info.locationTable[index] = nil
+						info.location_table[index] = nil
 						ArkInventorySearch_Stockpile.GlobalSearchCacheIndexLookup[player_id][location_id][bag_id][object_id] = nil
 					end
 				end
 				
 				-- if there are no locations left for this item remove it entirely from cache
-				if next( info.locationTable ) == nil then
+				if next( info.location_table ) == nil then
 					ArkInventorySearch_Stockpile.GlobalSearchCache[object_id] = nil
 				end
 				
@@ -420,83 +357,21 @@ function ArkInventorySearch_Stockpile.RecacheContainer( player_id, location_id, 
 		if sd.h then
 			local info = ArkInventory.ObjectInfoArray( sd.h )
 
-			info = ArkInventorySearch_Stockpile.ValidateItemInfo( info, sd )
+			info = ArkInventorySearch_Stockpile.ValidateItemInfo( info, sd, player_id, location_id, bag_id  )
 			
 			-- if info is missing data add this item to loading queue
-			if info.class == "item" and info.addToLoadingQueue then
-				ArkInventorySearch_Stockpile.ItemLoadingQueue[info.objectid] = {h = info.h, q = info.q, player_id = player_id, location_id = location_id, bag_id = bag_id}
+			if info.class == "item" and not info.isValid then
+				ArkInventorySearch_Stockpile.ItemLoadingPool[info.objectid] = info
 			-- otherwise, add it to local cache table if not already
 			elseif not item_cache_table[info.objectid] and info.class ~= "copper" then
-				item_cache_table[info.objectid] = { name = info.name, h = info.h, q = info.q, texture = info.texture, player_id = player_id, location_id = location_id, bag_id = bag_id, search_text = info.search_text }
+				item_cache_table[info.objectid] = info
 			end
 		end	
 	end
 	
 	-- batch add local cache table to global cache
 	ArkInventorySearch_Stockpile.AddItemsToSearchCache( item_cache_table )
-	
-end
-
-
--- Called after an auction bid, post-hook is after default function,
--- If the bid was a buyout grab the item info and store as sent mail
--- then trigger a mail cache update
-function ArkInventorySearch_Stockpile.HookPlaceAuctionBid( auction_type, index, bid )
-	
-	if not ArkInventory:IsEnabled( ) then return end
-	
-	local loc_id = ArkInventory.Const.Location.Mail
-	
-	if not ArkInventory.LocationIsMonitored( loc_id ) then return end
-	
-	table.wipe( ArkInventory.Global.Cache.SentMail )
-	
-	local player_id = ArkInventory.PlayerIDSelf( )
-	
-	local name, texture, count, _, _, _, _, _, _, buyoutPrice = GetAuctionItemInfo( auction_type, index )
-	
-	if bid >= buyoutPrice then
-		ArkInventory.Global.Cache.SentMail.to = player_id
-		ArkInventory.Global.Cache.SentMail.from = "Auction House"
-		ArkInventory.Global.Cache.SentMail.age = ArkInventory.TimeAsMinutes( )
-		
-		if name then
-			ArkInventory.Global.Cache.SentMail[1] = { n = name, c = count, h = GetAuctionItemLink( auction_type, index ) }
-		end
-		
-		ArkInventory.ScanMailSentData( )
-		ArkInventorySearch_Stockpile:SendMessage( "EVENT_ARKINV_SEARCH_CACHE_MAIL_SENT_UPDATE" )
-	end
-	
-end
-
--- Called when an auction is cancelled.  Pre-hook before normal function
--- grabs the item info and stores it as a sent mail then trigger
--- a mail cache update
-function ArkInventorySearch_Stockpile.HookCancelAuction( index )
-	
-	if not ArkInventory:IsEnabled( ) then return end
-	
-	local loc_id = ArkInventory.Const.Location.Mail
-	
-	if not ArkInventory.LocationIsMonitored( loc_id ) then return end
-	
-	table.wipe( ArkInventory.Global.Cache.SentMail )
-	
-	local player_id = ArkInventory.PlayerIDSelf( )
-	
-	-- known character, store sent mail data
-	ArkInventory.Global.Cache.SentMail.to = player_id
-	ArkInventory.Global.Cache.SentMail.from = "Auction House"
-	ArkInventory.Global.Cache.SentMail.age = ArkInventory.TimeAsMinutes( )
-	
-	local name, texture, count = GetAuctionItemInfo( "owner", index )
-	if name then
-		ArkInventory.Global.Cache.SentMail[1] = { n = name, c = count, h = GetAuctionItemLink( "owner", index ) }
-	end
-	
-	ArkInventory.ScanMailSentData( )
-	ArkInventorySearch_Stockpile:SendMessage( "EVENT_ARKINV_SEARCH_CACHE_MAIL_SENT_UPDATE" )
+	ArkInventorySearch_Stockpile.CleanUpLoadingQueue( )
 end
 
 -- Wrapper for building global search cache
@@ -510,16 +385,25 @@ function ArkInventorySearch_Stockpile.BuildGlobalSearchCache( )
 
 	ArkInventorySearch_Stockpile:SendMessage( "EVENT_ARKINV_BUILD_GLOBAL_CACHE" )
 	ArkInventorySearch_Stockpile:UnregisterMessage( "EVENT_ARKINV_BUILD_GLOBAL_CACHE" )
-	C_Timer.After( 10, ArkInventorySearch_Stockpile.RegisterSearchCacheEvents )
+	C_Timer.After( 6, ArkInventorySearch_Stockpile.RegisterSearchCacheEvents )
 	
 end
 
+local empty_count = 0
 -- Loops through all p,l,b in ArkInventory.db and builds global cache
 -- Items that are missing data are put in the loading queue
 function ArkInventorySearch_Stockpile:EVENT_ARKINV_BUILD_GLOBAL_CACHE( )
-	ArkInventorySearch_Stockpile.IsBuilding = true
-	local item_cache_table = { }
 
+	ArkInventorySearch_Stockpile.IsBuilding = true
+	ArkInventorySearch_Stockpile.GlobalSearchCache = { }
+	ArkInventorySearch_Stockpile.GlobalSearchCacheIndexLookup = { }
+	ArkInventorySearch_Stockpile.ItemLoadingPool = { }
+	
+	empty_count = 0
+	
+	local item_cache_table = { }
+	local info
+	
 	for p, pd in ArkInventory.spairs( ArkInventory.db.player.data ) do
 		
 		if not ArkInventorySearch_Stockpile.GlobalSearchCacheIndexLookup[p] then
@@ -542,26 +426,32 @@ function ArkInventorySearch_Stockpile:EVENT_ARKINV_BUILD_GLOBAL_CACHE( )
 				
 				for s, sd in pairs( bd.slot ) do
 					if sd.h then
-						local info = ArkInventory.ObjectInfoArray( sd.h )
+						info = ArkInventory.ObjectInfoArray( sd.h )
 						
-						info = ArkInventorySearch_Stockpile.ValidateItemInfo( info, sd )
+						info = ArkInventorySearch_Stockpile.ValidateItemInfo( info, sd, p, l, b )
 						
-						if info.class == "item" and info.addToLoadingQueue then
-							-- this should only happen when an item is not cached or cached item is missing info
-							-- send item to loading queue to be handled on EVENT_WOW_GET_ITEM_INFO_RECEIVED
-							ArkInventorySearch_Stockpile.ItemLoadingQueue[info.objectid] = { h = info.h, q = info.q, player_id = p, location_id = l, bag_id = b }
+						if info.class == "item" and not info.isValid then
+							ArkInventorySearch_Stockpile.ItemLoadingPool[info.objectid] = info
+						elseif not info.isValid then
+							print("add to queue but not item!!!!!!!!!!!!!!!!!")
 						elseif not item_cache_table[info.objectid] then
-							item_cache_table[info.objectid] = { name = info.name, h = info.h, q = info.q, texture = info.texture, player_id = p, location_id = l, bag_id = b, search_text = info.search_text }
+							item_cache_table[info.objectid] = info
 						end
+					else
+						empty_count = empty_count + 1
 					end
 				end
 				
 				ArkInventorySearch_Stockpile.AddItemsToSearchCache( item_cache_table )
-				
+				ArkInventorySearch_Stockpile.CleanUpLoadingQueue( )
 			end
 			
 		end
 		
 	end
 	ArkInventorySearch_Stockpile.IsBuilding = false
+	print("Empty count: " .. empty_count)
+	if StockpileFrame and not ArkInventorySearch_Stockpile.IsBuilding then
+		ArkInventorySearch_Stockpile.StockpileFrameBrowse_Search();
+	end
 end
