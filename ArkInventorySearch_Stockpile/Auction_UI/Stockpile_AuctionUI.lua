@@ -683,47 +683,52 @@ function ArkInventorySearch_Stockpile.StockpileFrameBrowse_Update()
 				if ( numBatchAuctions < NUM_BROWSE_TO_DISPLAY ) then
 					button:SetWidth(625);
 					buttonHighlight:SetWidth(589);
-					StockpileBrowseItemSubtypeSort:SetWidth(165);
-					buttonLastColumn:SetWidth(145);
+					StockpileBrowseItemSubtypeSort:SetWidth(158);
+					buttonLastColumn:SetWidth(138);
 				elseif ( numBatchAuctions == NUM_BROWSE_TO_DISPLAY and totalAuctions <= NUM_BROWSE_TO_DISPLAY ) then
 					button:SetWidth(625);
 					buttonHighlight:SetWidth(589);
-					StockpileBrowseItemSubtypeSort:SetWidth(165);
-					buttonLastColumn:SetWidth(145);
+					StockpileBrowseItemSubtypeSort:SetWidth(158);
+					buttonLastColumn:SetWidth(138);
 				else
 					button:SetWidth(600);
 					buttonHighlight:SetWidth(562);
-					StockpileBrowseItemSubtypeSort:SetWidth(142);
-					buttonLastColumn:SetWidth(122);
+					StockpileBrowseItemSubtypeSort:SetWidth(135);
+					buttonLastColumn:SetWidth(115);
 				end
 				-- Set name and quality color
 				color = ITEM_QUALITY_COLORS[quality];
-				itemName = _G[buttonName.."Name"];
+				itemName = _G[buttonName.."ItemNameColumnText"];
 				itemName:SetText(name);
 				itemName:SetVertexColor(color.r, color.g, color.b);
 				local itemButton = _G[buttonName.."Item"];
 
 				SetItemButtonQuality(itemButton, quality, itemId);
 				
-				local rarityString = _G["ITEM_QUALITY"..quality.."_DESC"];
-				_G[buttonName.."ItemRarityColumnText"]:SetText(rarityString);
-				_G[buttonName.."ItemRarityColumnText"]:SetVertexColor(color.r, color.g, color.b);
-				_G[buttonName.."ItemRarityColumn"].tooltip = rarityString;
+				-- local rarityString = _G["ITEM_QUALITY"..quality.."_DESC"];
+				-- _G[buttonName.."ItemRarityColumnText"]:SetText(rarityString);
+				-- _G[buttonName.."ItemRarityColumnText"]:SetVertexColor(color.r, color.g, color.b);
+				-- _G[buttonName.."ItemRarityColumn"].tooltip = rarityString;
 				
 				-- Set level
 				if ( level > UnitLevel("player") ) then
-					_G[buttonName.."Level"]:SetText(RED_FONT_COLOR_CODE..level..FONT_COLOR_CODE_CLOSE);
+					_G[buttonName.."ItemUseLevelColumnText"]:SetText(RED_FONT_COLOR_CODE..level..FONT_COLOR_CODE_CLOSE);
 				else
-					_G[buttonName.."Level"]:SetText(level);
+					_G[buttonName.."ItemUseLevelColumnText"]:SetText(level);
 				end
+				_G[buttonName.."ItemUseLevelColumn"].tooltip = level;
 				
-				-- Set closing time
+				-- Set ilvl
 				_G[buttonName.."ItemLevelColumnText"]:SetText(item_info.ilvl);
-				_G[buttonName.."ItemLevelColumn"].tooltip = item_info.itemtype;
+				_G[buttonName.."ItemLevelColumn"].tooltip = item_info.ilvl;
 				
-				_G[buttonName.."ItemTypeColumn"].Name:SetText(item_info.itemtype);
+				-- Set item category
+				_G[buttonName.."ItemTypeColumnText"]:SetText(item_info.itemtype);
+				_G[buttonName.."ItemTypeColumn"].tooltip = item_info.itemtype;
 				
-				_G[buttonName.."ItemSubtypeColumn"].Name:SetText(item_info.itemsubtype);
+				-- Set item subcategory
+				_G[buttonName.."ItemSubtypeColumnText"]:SetText(item_info.itemsubtype);
+				_G[buttonName.."ItemSubtypeColumn"].tooltip = item_info.itemsubtype;
 				
 				-- Set item texture, count, and usability
 				iconTexture = _G[buttonName.."ItemIconTexture"];

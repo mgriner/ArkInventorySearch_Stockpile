@@ -68,13 +68,13 @@ ArkInventorySearch_Stockpile.StockpileSort["list_itemSubtype"] = {
 };
 
 ArkInventorySearch_Stockpile.StockpileSort["list_quality"] = {
-	{ column = "duration",	reverse = false	},
-	{ column = "unitprice",		reverse = false },
-	{ column = "quantity",	reverse = true	},
-	{ column = "minbidbuyout",	reverse = false	},
+	-- { column = "duration",	reverse = false	},
+	-- { column = "unitprice",		reverse = false },
+	-- { column = "quantity",	reverse = true	},
+	-- { column = "minbidbuyout",	reverse = false	},
+	-- { column = "level",		reverse = true	},
+	{ column = "q",	reverse = false	},
 	{ column = "name",		reverse = false	},
-	{ column = "level",		reverse = true	},
-	{ column = "quality",	reverse = false	},
 };
 
 ArkInventorySearch_Stockpile.StockpileCategories = {};

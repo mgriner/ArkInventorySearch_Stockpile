@@ -32,7 +32,7 @@ ArkInventorySearch_Stockpile = LibStub( "AceAddon-3.0" ):NewAddon( "ArkInventory
 ArkInventorySearch_Stockpile.Lib = { -- libraries live here
 	
 	Config = LibStub( "AceConfig-3.0" ),
-	
+	Dialog = LibStub( "AceConfigDialog-3.0" ),
 }
 
 ArkInventorySearch_Stockpile:SetDefaultModuleState(false)
@@ -67,7 +67,7 @@ function ArkInventorySearch_Stockpile.OnInitialize( )
 	-- config menu (blizzard)
 	ArkInventorySearch_Stockpile.ConfigBlizzard( )
 	ArkInventorySearch_Stockpile.Lib.Config:RegisterOptionsTable( "ArkInventory_StockpileConfigBlizzard", ArkInventorySearch_Stockpile.Config.Blizzard )
-	ArkInventory.Lib.Dialog:AddToBlizOptions( "ArkInventory_StockpileConfigBlizzard", "ArkInventorySearch_Stockpile" )
+	ArkInventorySearch_Stockpile.Lib.Dialog:AddToBlizOptions( "ArkInventory_StockpileConfigBlizzard", "ArkInventorySearch_Stockpile" )
 end
 
 function ArkInventorySearch_Stockpile:OnEnable()

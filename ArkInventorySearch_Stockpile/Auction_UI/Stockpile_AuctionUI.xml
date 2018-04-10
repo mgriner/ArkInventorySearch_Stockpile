@@ -738,7 +738,7 @@
 					</Frame> -->
 					<Button name="StockpileBrowseNameSort" inherits="StockpileSortButtonTemplate" text="NAME">
 						<Size>
-							<AbsDimension x="214" y="19"/>
+							<AbsDimension x="164" y="19"/>
 						</Size>
 						<Anchors>
 							<Anchor point="TOPLEFT">
@@ -753,12 +753,29 @@
 							</OnClick>
 						</Scripts>
 					</Button>
-					<Button name="StockpileBrowseLevelSort" inherits="StockpileSortButtonTemplate" text="REQ_LEVEL_ABBR">
+					<Button name="StockpileBrowseRaritySort" inherits="StockpileSortButtonTemplate" text="Rarity">
 						<Size>
-							<AbsDimension x="57" y="19"/>
+							<AbsDimension x="130" y="19"/>
 						</Size>
 						<Anchors>
 							<Anchor point="LEFT" relativeTo="StockpileBrowseNameSort" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="-2" y="0"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								ArkInventorySearch_Stockpile.StockpileFrame_OnClickSortColumn("list", "quality")
+							</OnClick>
+						</Scripts>
+					</Button>
+					<Button name="StockpileBrowseLevelSort" inherits="StockpileSortButtonTemplate" text="REQ_LEVEL_ABBR">
+						<Size>
+							<AbsDimension x="43" y="19"/>
+						</Size>
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="StockpileBrowseRaritySort" relativePoint="RIGHT">
 								<Offset>
 									<AbsDimension x="-2" y="0"/>
 								</Offset>
@@ -772,7 +789,7 @@
 					</Button>
 					<Button name="StockpileBrowseItemLevelSort" inherits="StockpileSortButtonTemplate" text="ITEM_LEVEL_ABBR">
 						<Size>
-							<AbsDimension x="57" y="19"/>
+							<AbsDimension x="43" y="19"/>
 						</Size>
 						<Anchors>
 							<Anchor point="LEFT" relativeTo="StockpileBrowseLevelSort" relativePoint="RIGHT">
@@ -789,7 +806,7 @@
 					</Button>
 					<Button name="StockpileBrowseItemTypeColumnSort" inherits="StockpileSortButtonTemplate" text="CATEGORY">
 						<Size>
-							<AbsDimension x="142" y="19"/>
+							<AbsDimension x="109" y="19"/>
 						</Size>
 						<Anchors>
 							<Anchor point="LEFT" relativeTo="StockpileBrowseItemLevelSort" relativePoint="RIGHT">
@@ -806,7 +823,7 @@
 					</Button>
 					<Button name="StockpileBrowseItemSubtypeSort" inherits="StockpileSortButtonTemplate" text="SUBCATEGORY">
 						<Size>
-							<AbsDimension x="142" y="19"/>
+							<AbsDimension x="135" y="19"/>
 						</Size>
 						<Anchors>
 							<Anchor point="LEFT" relativeTo="StockpileBrowseItemTypeColumnSort" relativePoint="RIGHT">
