@@ -2,15 +2,9 @@ NUM_BROWSE_TO_DISPLAY = 8;
 NUM_AUCTION_ITEMS_PER_PAGE = 50;
 NUM_FILTERS_TO_DISPLAY = 15;
 BROWSE_FILTER_HEIGHT = 20;
-NUM_BIDS_TO_DISPLAY = 9;
-NUM_AUCTIONS_TO_DISPLAY = 9;
 AUCTIONS_BUTTON_HEIGHT = 37;
 CLASS_FILTERS = {};
 OPEN_FILTER_LIST = {};
-AUCTION_TIMER_UPDATE_DELAY = 0.3;
-MAXIMUM_BID_PRICE = 99999999999;
-AUCTION_CANCEL_COST =  5;	--5% of the current bid
-NUM_TOKEN_LOGS_TO_DISPLAY = 14;
 
 ArkInventorySearch_Stockpile.StockpileSort = { };
 
@@ -397,9 +391,3 @@ do -- Miscellaneous
 	miscellaneousCategory:CreateSubCategoryAndFilter(LE_ITEM_CLASS_MISCELLANEOUS, LE_ITEM_MISCELLANEOUS_OTHER);
 	miscellaneousCategory:CreateSubCategoryAndFilter(LE_ITEM_CLASS_MISCELLANEOUS, LE_ITEM_MISCELLANEOUS_MOUNT);
 end
-
--- do -- WoW Token
-	-- local wowTokenCategory = ArkInventorySearch_Stockpile.CreateCategory(TOKEN_FILTER_LABEL);
-	-- wowTokenCategory:AddFilter(ITEM_CLASS_WOW_TOKEN);
-	-- wowTokenCategory:SetFlag("WOW_TOKEN_FLAG");
--- end

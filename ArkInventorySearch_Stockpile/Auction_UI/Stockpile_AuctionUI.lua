@@ -265,27 +265,6 @@ function ArkInventorySearch_Stockpile.StockpileFrame_SortStockpileDoSort(sortTab
 				end
 			end
 		end);
-		-- if sortColumn == "name" then
-			-- if sortReverse then
-				-- if #ArkInventorySearch_Stockpile.SearchResultsTable > 0 then
-					-- table.sort( ArkInventorySearch_Stockpile.SearchResultsTable, function( a, b ) return a.sorted > b.sorted end )
-				-- end
-			-- else
-				-- if #ArkInventorySearch_Stockpile.SearchResultsTable > 0 then
-					-- table.sort( ArkInventorySearch_Stockpile.SearchResultsTable, function( a, b ) return a.sorted < b.sorted end )
-				-- end
-			-- end
-		-- elseif sortColumn == "level" then
-			-- if sortReverse then
-				-- if #ArkInventorySearch_Stockpile.SearchResultsTable > 0 then
-					-- table.sort( ArkInventorySearch_Stockpile.SearchResultsTable, function( a, b ) return a.uselevel > b.uselevel end )
-				-- end
-			-- else
-				-- if #ArkInventorySearch_Stockpile.SearchResultsTable > 0 then
-					-- table.sort( ArkInventorySearch_Stockpile.SearchResultsTable, function( a, b ) return a.uselevel < b.uselevel end )
-				-- end
-			-- end
-		-- end
 	end
 end
 
