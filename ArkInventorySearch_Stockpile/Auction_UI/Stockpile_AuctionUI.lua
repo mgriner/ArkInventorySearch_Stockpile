@@ -21,6 +21,10 @@ function ArkInventorySearch_Stockpile.StockpileFrame_OnLoad (self)
 	-- Init search dot count
 	StockpileFrameBrowse.dotCount = 0;
 	StockpileFrameBrowse.isSearchingThrottle = 0;
+	
+	-- Init status dot count
+	StockpileCacheStatus.dotCount = 0;
+	StockpileCacheStatus.isSearchingThrottle = 0;
 
 	StockpileFrameBrowse.page = 0;
 	FauxScrollFrame_SetOffset(StockpileBrowseScrollFrame,0);
@@ -83,7 +87,7 @@ function ArkInventorySearch_Stockpile.StockpileFrameBrowse_UpdateArrows()
 	ArkInventorySearch_Stockpile.SortButton_UpdateArrow(StockpileBrowseItemSubtypeSort, "list", "itemSubtype");
 end
 
-function ArkInventorySearch_Stockpile:EVENT_STOCKPILE_CACHE_ITEM_LIST_UPDATE( )
+function ArkInventorySearch_Stockpile:EVENT_STOCKPILE_SEARCH_TABLE_UPDATED( )
 	ArkInventorySearch_Stockpile.StockpileFrameBrowse_Update();
 	-- Stop "searching" messaging
 	ArkInventorySearch_Stockpile.StockpileFrameBrowse_isSearching = nil;
@@ -287,7 +291,7 @@ function ArkInventorySearch_Stockpile.StockpileFrame_SetSort(sortTable, sortColu
 		table.insert(sortOptions, sortRow);
 	end
 	ArkInventorySearch_Stockpile.StockpileFrame_SortStockpileDoSort(sortTable, sortColumn, sortOptions);
-	ArkInventorySearch_Stockpile:SendMessage( "EVENT_STOCKPILE_CACHE_ITEM_LIST_UPDATE")
+	ArkInventorySearch_Stockpile:SendMessage( "EVENT_STOCKPILE_SEARCH_TABLE_UPDATED")
 end
 
 function ArkInventorySearch_Stockpile.StockpileFrame_GetStockpileSort(sortTable)
@@ -343,8 +347,8 @@ local function StockpileFrameBrowse_SearchHelper(...)
 		-- not filtering by category, leave nil for all
 	end
 	
-	local should_update = ArkInventorySearch_Stockpile.IsGlobalSearchCacheUpdated
-	local should_filter = ArkInventorySearch_Stockpile.IsGlobalSearchCacheUpdated
+	local should_update = ArkInventorySearch_Stockpile.IsGlobalSearchCacheModified
+	local should_filter = ArkInventorySearch_Stockpile.IsGlobalSearchCacheModified
 	if ( not prevBrowseParams ) then
 		-- if we are doing a search for the first time then create the browse param cache
 		prevBrowseParams = { };
@@ -410,6 +414,42 @@ local function StockpileFrameBrowse_SearchHelper(...)
 			prevBrowseParams[i] = select(i, ...);
 		end
 	end
+	-- reset update flag
+	ArkInventorySearch_Stockpile.IsGlobalSearchCacheModified = false;
+end
+
+function ArkInventorySearch_Stockpile.StockpileFrameBrowse_Search()
+	if ( not StockpileFrameBrowse.page ) then
+		StockpileFrameBrowse.page = 0;
+	end
+	
+	StockpileFrameBrowse_SearchHelper(StockpileBrowseName:GetText(), StockpileBrowseMinLevel:GetNumber(), StockpileBrowseMaxLevel:GetNumber(), StockpileBrowseMinItemLevel:GetNumber(), StockpileBrowseMaxItemLevel:GetNumber(), StockpileFrameBrowse.selectedCategoryIndex, StockpileFrameBrowse.selectedSubCategoryIndex, StockpileFrameBrowse.selectedSubSubCategoryIndex, StockpileFrameBrowse.page, StockpileIsUsableCheckButton:GetChecked(), StockpileBrowseRarityFilters, StockpileExactMatchCheckButton:GetChecked());
+end
+
+function StockpileCacheStatusFrame_OnUpdate(self, elapsed)
+	if (ArkInventorySearch_Stockpile.IsItemLoading) or (ArkInventorySearch_Stockpile.IsBuilding) then
+		if ( StockpileCacheStatus.isSearchingThrottle <= 0 ) then
+			StockpileCacheStatus.dotCount = StockpileCacheStatus.dotCount + 1;
+			if ( StockpileCacheStatus.dotCount > 3 ) then
+				StockpileCacheStatus.dotCount = 0
+			end
+			local dotString = "";
+			for i=1, StockpileCacheStatus.dotCount do
+				dotString = dotString..".";
+			end
+			
+			StockpileBrowseStatusDotsText:Show();
+			StockpileBrowseStatusDotsText:SetText(dotString);
+			StockpileBrowseStatusText:Show();
+			
+			StockpileCacheStatus.isSearchingThrottle = 0.3;
+		else
+			StockpileCacheStatus.isSearchingThrottle = StockpileCacheStatus.isSearchingThrottle - elapsed;
+		end
+	else
+		StockpileBrowseStatusDotsText:Hide();
+		StockpileBrowseStatusText:Hide();
+	end
 end
 
 function ArkInventorySearch_Stockpile.StockpileFrameBrowse_Search()
@@ -421,7 +461,7 @@ function ArkInventorySearch_Stockpile.StockpileFrameBrowse_Search()
 end
 
 function StockpileBrowseSearchButton_OnUpdate(self, elapsed)
-	if (ArkInventorySearch_Stockpile.StockpileFrameBrowse_isSearching) then
+	if ArkInventorySearch_Stockpile.StockpileFrameBrowse_isSearching then
 		if ( StockpileFrameBrowse.isSearchingThrottle <= 0 ) then
 			StockpileFrameBrowse.dotCount = StockpileFrameBrowse.dotCount + 1;
 			if ( StockpileFrameBrowse.dotCount > 3 ) then
@@ -433,6 +473,7 @@ function StockpileBrowseSearchButton_OnUpdate(self, elapsed)
 			end
 			StockpileBrowseSearchDotsText:Show();
 			StockpileBrowseSearchDotsText:SetText(dotString);
+			
 			StockpileBrowseNoResultsText:SetText(SEARCHING_FOR_ITEMS);
 			StockpileFrameBrowse.isSearchingThrottle = 0.3;
 		else

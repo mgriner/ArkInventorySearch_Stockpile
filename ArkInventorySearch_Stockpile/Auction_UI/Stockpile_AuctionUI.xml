@@ -853,6 +853,55 @@
 							</OnClick>
 						</Scripts>
 					</Button>
+					<Frame name="StockpileCacheStatus">
+						<Size>
+							<AbsDimension x="555" y="15"/>
+						</Size>
+						<Anchors>
+							<Anchor point="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="185" y="18"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Layers>
+							<Layer level="OVERLAY">
+								<!-- <Texture setAllPoints="true">
+									<Color a="0.25" r="0.5" g="0.5" b="1" />
+								</Texture> -->
+								<FontString name="StockpileBrowseStatusText" inherits="GameFontNormal" text="Building Stockpile" setAllPoints="true" >
+									<Anchors>
+										<Anchor point="LEFT">
+											<Offset>
+												<AbsDimension x="5" y="0"/>
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+								<FontString name="StockpileBrowseStatusDotsText" inherits="GameFontNormal" setAllPoints="true" >
+									<Anchors>
+										<Anchor point="LEFT" relativeTo="StockpileBrowseStatusText" relativePoint="RIGHT">
+											<Offset>
+												<AbsDimension x="0" y="0"/>
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+								<FontString name="StockpileCacheStatusText" inherits="GameFontHighlightSmall" text="Items in Stockpile: 0" setAllPoints="true" >
+									<Anchors>
+										<Anchor point="LEFT">
+											<Offset>
+												<AbsDimension x="225" y="0"/>
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<Scripts>
+							<OnUpdate function="StockpileCacheStatusFrame_OnUpdate"/>
+						</Scripts>
+					</Frame>
 					<CheckButton name="StockpileExactMatchCheckButton" inherits="UICheckButtonTemplate">
 						<Size x="24" y="24"/>
 						<Anchors>
@@ -900,7 +949,7 @@
 			<OnDragStop>self:StopMovingOrSizing();</OnDragStop>
 		</Scripts>
 	</Frame>
-	<Frame name="AuctionProgressFrame" hidden="true" toplevel="true" parent="UIParent">
+	<Frame name="StockpileProgressFrame" hidden="true" toplevel="true" parent="UIParent">
 		<Size>
 			<AbsDimension x="300" y="64"/>
 		</Size>
@@ -957,7 +1006,7 @@
 			</Layer>
 		</Layers>
 		<Frames>
-			<StatusBar name="AuctionProgressBar" toplevel="true" inherits="CastingBarFrameTemplate">
+			<StatusBar name="StockpileProgressBar" toplevel="true" inherits="CastingBarFrameTemplate">
 				<Size>
 					<AbsDimension x="195" y="13"/>
 				</Size>
@@ -970,12 +1019,12 @@
 				</Anchors>
 				<Scripts>
 					<OnLoad>
-						AuctionProgressBar.Spark:Hide();
-						AuctionProgressBar.Flash:Hide();
-						AuctionProgressBar.Icon:Show();
-						AuctionProgressBar.Icon:SetWidth(24);
-						AuctionProgressBar.Icon:SetHeight(24);
-						AuctionProgressBar.Icon:SetPoint("RIGHT", "$parent", "LEFT", -10, 2);
+						StockpileProgressBar.Spark:Hide();
+						StockpileProgressBar.Flash:Hide();
+						StockpileProgressBar.Icon:Show();
+						StockpileProgressBar.Icon:SetWidth(24);
+						StockpileProgressBar.Icon:SetHeight(24);
+						StockpileProgressBar.Icon:SetPoint("RIGHT", "$parent", "LEFT", -10, 2);
 					</OnLoad>
 					<OnEvent></OnEvent>
 					<OnShow></OnShow>
@@ -987,7 +1036,7 @@
 					<AbsDimension x="32" y="32"/>
 				</Size>
 				<Anchors>
-					<Anchor point="LEFT" relativeTo="AuctionProgressBar" relativePoint="RIGHT">
+					<Anchor point="LEFT" relativeTo="StockpileProgressBar" relativePoint="RIGHT">
 						<Offset>
 							<AbsDimension x="2" y="1"/>
 						</Offset>
@@ -1010,7 +1059,7 @@
 			<OnLoad>
 				UIParent_ManageFramePositions();
 			</OnLoad>
-			<OnUpdate function="AuctionProgressFrame_OnUpdate"/>
+			<OnUpdate function="StockpileProgressFrame_OnUpdate"/>
 		</Scripts>
 	</Frame>
 </Ui>

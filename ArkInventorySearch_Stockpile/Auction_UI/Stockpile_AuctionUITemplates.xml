@@ -292,7 +292,7 @@
 				</Anchors>
 				<Layers>
 					<Layer level="BACKGROUND">
-						<!-- <Texture>
+						<!-- <Texture setAllPoints="true">
 							<Color a="0.25" r="0" g="1" b="0" />
 						</Texture> -->
 						<FontString name="$parentText" inherits="GameFontNormal" justifyH="LEFT" setAllPoints="true"/>
@@ -339,7 +339,7 @@
 				</Anchors>
 				<Layers>
 					<Layer level="BACKGROUND">
-						<Texture>
+						<Texture setAllPoints="true">
 							<Color a="0.5" r="0.2" g="0.2" b="0" />
 						</Texture>
 						<FontString name="$parentText" inherits="GameFontHighlightSmall" setAllPoints="true"/>
@@ -370,8 +370,7 @@
 				</Anchors>
 				<Layers>
 					<Layer level="BACKGROUND">
-						<!-- <Texture>
-							<Size x="35" y="32" />
+						<!-- <Texture setAllPoints="true">
 							<Color a="0.25" r="0.5" g="0.5" b="1" />
 						</Texture> -->
 						<FontString name="$parentText" inherits="GameFontHighlightSmall" setAllPoints="true"/>
@@ -402,7 +401,7 @@
 				</Anchors>
 				<Layers>
 					<Layer level="BACKGROUND">
-						<!-- <Texture>
+						<!-- <Texture setAllPoints="true">
 							<Color a="0.5" r="0.7" g="0.1" b="0.1" />
 						</Texture> -->
 						<FontString name="$parentText" inherits="GameFontHighlightSmall" setAllPoints="true"/>
@@ -428,7 +427,7 @@
 				<Layers>
 					<Layer level="BACKGROUND">
 						<FontString name="$parentText" inherits="GameFontHighlightSmall" setAllPoints="true"/>
-						<!-- <Texture>
+						<!-- <Texture setAllPoints="true">
 							<Color a="0.5" r="0.25" g="0.4" b="0.1" />
 						</Texture> -->
 					</Layer>
@@ -457,7 +456,7 @@
 				<Layers>
 					<Layer level="BACKGROUND">
 						<FontString name="$parentText" inherits="GameFontHighlightSmall" setAllPoints="true"/>
-						<!-- <Texture>
+						<!-- <Texture setAllPoints="true">
 							<Color a="0.5" r="0.25" g="0.1" b="0.3" />
 						</Texture> -->
 					</Layer>

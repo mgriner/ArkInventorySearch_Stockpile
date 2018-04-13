@@ -25,10 +25,11 @@ function ArkInventorySearch_Stockpile.SearchModule:OnEnable( )
 	ArkInventorySearch_Stockpile:RegisterEvent( "PLAYER_ALIVE", "EVENT_WOW_PLAYER_ALIVE" )
 	ArkInventorySearch_Stockpile:RegisterEvent( "GET_ITEM_INFO_RECEIVED", "EVENT_WOW_GET_ITEM_INFO_RECEIVED" )
 	ArkInventorySearch_Stockpile:RegisterMessage( "EVENT_ARKINV_BUILD_GLOBAL_CACHE" )
-	ArkInventorySearch_Stockpile:RegisterBucketMessage( "EVENT_ARKINV_GET_ITEM_INFO_RECEIVED_BUCKET", 10)
+	ArkInventorySearch_Stockpile:RegisterBucketMessage( "EVENT_ARKINV_GET_ITEM_INFO_RECEIVED_BUCKET", 2)
+	ArkInventorySearch_Stockpile:RegisterBucketMessage( "EVENT_STOCKPILE_CACHE_MODIFIED", 1)
 	
 	-- for auction UI
-	ArkInventorySearch_Stockpile:RegisterMessage( "EVENT_STOCKPILE_CACHE_ITEM_LIST_UPDATE" )
+	ArkInventorySearch_Stockpile:RegisterMessage( "EVENT_STOCKPILE_SEARCH_TABLE_UPDATED" )
 	
 	-- registering global cache specific hooks
 	-- auction functions
@@ -238,7 +239,7 @@ function ArkInventorySearch_Stockpile.QueryStockpileCacheItems( text, filterData
 		end
 	end
 	ArkInventorySearch_Stockpile.SearchResultsTable = newSearchTable
-	ArkInventorySearch_Stockpile:SendMessage( "EVENT_STOCKPILE_CACHE_ITEM_LIST_UPDATE")
+	ArkInventorySearch_Stockpile:SendMessage( "EVENT_STOCKPILE_SEARCH_TABLE_UPDATED")
 end
 
 function table.val_to_str ( v )
